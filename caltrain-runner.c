@@ -79,9 +79,9 @@ main()
 	struct station station;
 	station_init(&station);
 
-	srandom(getpid() ^ time(NULL));
+	srand(getpid() ^ time(NULL));
 
-	signal(SIGALRM, alarm_handler);
+	signal(0, alarm_handler);
 
 	// Make sure station_load_train() returns immediately if no waiting passengers.
 	_alarm(1, "station_load_train() did not return immediately when no waiting passengers");
@@ -109,7 +109,7 @@ main()
 	station_load_train(&station, 0);
 	_alarm(0, NULL);
 
-	// Tons of random tests.
+	// Tons of rand tests.
 	int total_passengers_boarded = 0;
 	const int max_free_seats_per_train = 50;
 	int pass = 0;
@@ -117,7 +117,7 @@ main()
 		_alarm(2, "Some more complicated issue appears to have caused passengers "
 			"not to board when given the opportunity");
 
-		int free_seats = random() % max_free_seats_per_train;
+		int free_seats = rand() % max_free_seats_per_train;
 
 		printf("Train entering station with %d free seats\n", free_seats);
 		load_train_returned = 0;
@@ -139,7 +139,7 @@ main()
 			}
 			if (threads_completed > 0) {
 				if ((pass % 2) == 0)
-					usleep(random() % 2);
+					usleep(rand() % 2);
 				threads_reaped++;
 				station_on_board(&station);
 				__sync_sub_and_fetch(&threads_completed, 1);

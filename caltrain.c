@@ -13,8 +13,10 @@ struct station {
 
 void print_station(struct station *station) 
 {
-	printf("[Station|Waiting Passengers: %d, Train Standing Passengers: %d, Train Empty Seats: %d]\n", station->station_waiting_passengers,station->train_standing_passengers,station->train_empty_seats);
+	printf("[Station|Waiting Passengers: %d, Train Standing Passengers: %d, Train Empty Seats: %d]\n",
+			station->station_waiting_passengers,station->train_standing_passengers,station->train_empty_seats);
 }
+
 
 void station_init(struct station *station)
 {
