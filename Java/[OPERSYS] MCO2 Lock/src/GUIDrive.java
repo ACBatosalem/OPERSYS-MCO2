@@ -87,8 +87,7 @@ public class GUIDrive extends JFrame implements MouseListener {
 		c = new caltrain();
 		c.station_init(); // add's 2nd station to the caltrain system
 		c.station_init(); // add's 3nd station to the caltrain system
-		c.station_init(); // add's 4nd station to the caltrain system
-		c.station_init(); // add's 4nd station to the caltrain system
+		c.station_init(); // add's 4th station to the caltrain system
 		c.station_init(); // add's 5th station to the caltrain system
 		c.station_init(); // add's 6th station to the caltrain system
 		c.station_init(); // add's 7th station to the caltrain system
