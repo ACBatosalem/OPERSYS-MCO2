@@ -211,7 +211,7 @@ public class GUIDrive extends JFrame implements MouseListener{
 		
 		submittedBy.setForeground(new Color(255, 255, 255));
 		submittedBy.setBackground(new Color(0, 128, 0));
-		submittedBy.setText("Submitted By:\r\n\r\nAbutog,   Jan Joseph\r\nVenzon,   Justin\r\nVillaluna, Winfred\r\nOPERSYS S17 Grp3");
+		submittedBy.setText("Submitted By:\r\n\r\n Gaba, Janelle Marie\r\n Ngo, Jan Bertel \r\n Ticug, Jonal Ray \r\nOPERSYS S21 Grp11");
 		submittedBy.setFont(new Font("Josefin Sans", Font.PLAIN, 15));
 		submittedBy.setBounds(10, 11, 143, 111);
 		panel_1.add(submittedBy);

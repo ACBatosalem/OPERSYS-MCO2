@@ -10,7 +10,7 @@ public class caltrain{
 
 	ArrayList<Station> stations = new ArrayList<>();
 	
-	public int trainCtr;
+	private int trainCtr;
 	public int peopleCtr;
 
 	public caltrain(){
@@ -34,6 +34,7 @@ public class caltrain{
 	
 	public void station_load_train(Station s, int count){
 		new Train("Train " + trainCtr, count, s, this);
+		caltrainGUI.lblNumTrainsDeployed.setText(String.valueOf(trainCtr));
 		trainCtr++;
 	}
 	
@@ -142,5 +143,13 @@ public class caltrain{
 			}
 		}
 		System.out.println("====================================================");	
+	}
+
+	public int getTrainCtr() {
+		return trainCtr;
+	}
+
+	public void setTrainCtr(int trainCtr) {
+		this.trainCtr = trainCtr;
 	}
 }

@@ -21,11 +21,11 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.JScrollPane;
 
 public class GUIDrive extends JFrame implements MouseListener {
-	private JPanel contentPane;
+	public JPanel contentPane;
 
 	public JPanel stationPanel;
 	public JLabel stationLabel;
-	public JPanel panel;
+	public JPanel stationInnerPanel;
 	public JLabel lblNewLabel;
 	public JButton addStation1Btn;
 	public JButton addStation2Btn;
@@ -55,28 +55,28 @@ public class GUIDrive extends JFrame implements MouseListener {
 	public caltrain c;
 
 	public ArrayList<JTextArea> stationList;
-	private JLabel lblNewLabel_1;
-	private JScrollPane scrollPane;
-	private JScrollPane scrollPane_1;
-	private JScrollPane scrollPane_2;
-	private JScrollPane scrollPane_3;
-	private JPanel station5Panel;
-	private JLabel lblStation;
-	private JScrollPane scrollPane_4;
-	private JPanel station6Panel;
-	private JLabel lblStation_1;
-	private JScrollPane scrollPane_5;
-	private JPanel station7Panel;
-	private JLabel lblStation_2;
-	private JScrollPane scrollPane_6;
-	private JPanel station8Panel;
-	private JLabel lblStation_3;
-	private JScrollPane scrollPane_7;
-	private JButton addStation5Btn;
-	private JButton addStation6Btn;
-	private JButton addStation8Btn;
-	private JButton addStation7Btn;
-	private JLabel lblNewLabel_2;
+	public JLabel lblNewLabel_1;
+	public JScrollPane scrollPane;
+	public JScrollPane scrollPane_1;
+	public JScrollPane scrollPane_2;
+	public JScrollPane scrollPane_3;
+	public JPanel station5Panel;
+	public JLabel lblStation;
+	public JScrollPane scrollPane_4;
+	public JPanel station6Panel;
+	public JLabel lblStation_1;
+	public JScrollPane scrollPane_5;
+	public JPanel station7Panel;
+	public JLabel lblStation_2;
+	public JScrollPane scrollPane_6;
+	public JPanel station8Panel;
+	public JLabel lblStation_3;
+	public JScrollPane scrollPane_7;
+	public JButton addStation5Btn;
+	public JButton addStation6Btn;
+	public JButton addStation8Btn;
+	public JButton addStation7Btn;
+	public JLabel lblNumTrainsDeployed;
 
 	public static void main(String[] args) {
 		GUIDrive gui;
@@ -118,7 +118,6 @@ public class GUIDrive extends JFrame implements MouseListener {
 		stationList.add(station7Status);
 		stationList.add(station8Status);
 
-		
 	}
 
 	public void setLogic(caltrain c) {
@@ -130,7 +129,7 @@ public class GUIDrive extends JFrame implements MouseListener {
 
 		stationPanel = new JPanel();
 		stationLabel = new JLabel("Stations");
-		panel = new JPanel();
+		stationInnerPanel = new JPanel();
 		lblNewLabel = new JLabel("Add Passengers At");
 		addStation1Btn = new JButton("Station 1");
 		addStation2Btn = new JButton("Station 2");
@@ -170,51 +169,51 @@ public class GUIDrive extends JFrame implements MouseListener {
 		stationLabel.setBounds(10, 11, 183, 26);
 		stationPanel.add(stationLabel);
 
-		panel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		panel.setBackground(new Color(34, 139, 34));
-		panel.setBounds(10, 37, 183, 652);
-		stationPanel.add(panel);
-		panel.setLayout(null);
+		stationInnerPanel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		stationInnerPanel.setBackground(new Color(34, 139, 34));
+		stationInnerPanel.setBounds(10, 37, 183, 652);
+		stationPanel.add(stationInnerPanel);
+		stationInnerPanel.setLayout(null);
 
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setFont(new Font("Josefin Sans", Font.BOLD, 13));
 		lblNewLabel.setBounds(10, 11, 146, 20);
-		panel.add(lblNewLabel);
+		stationInnerPanel.add(lblNewLabel);
 
 		addStation1Btn.setFont(new Font("Josefin Sans", Font.PLAIN, 10));
 		addStation1Btn.setBounds(10, 42, 73, 23);
 		addStation1Btn.addMouseListener(this);
-		panel.add(addStation1Btn);
+		stationInnerPanel.add(addStation1Btn);
 
 		addStation2Btn.setFont(new Font("Josefin Sans", Font.PLAIN, 10));
 		addStation2Btn.setBounds(100, 42, 73, 23);
 		addStation2Btn.addMouseListener(this);
-		panel.add(addStation2Btn);
+		stationInnerPanel.add(addStation2Btn);
 
 		addStation4Btn.setFont(new Font("Josefin Sans", Font.PLAIN, 10));
 		addStation4Btn.setBounds(100, 76, 73, 23);
 		addStation4Btn.addMouseListener(this);
-		panel.add(addStation4Btn);
+		stationInnerPanel.add(addStation4Btn);
 
 		addStation3Btn.setFont(new Font("Josefin Sans", Font.PLAIN, 10));
 		addStation3Btn.setBounds(10, 76, 73, 23);
 		addStation3Btn.addMouseListener(this);
-		panel.add(addStation3Btn);
+		stationInnerPanel.add(addStation3Btn);
 
 		lblDeployTrainAt.setForeground(Color.WHITE);
 		lblDeployTrainAt.setFont(new Font("Josefin Sans", Font.BOLD, 13));
 		lblDeployTrainAt.setBounds(10, 226, 146, 20);
-		panel.add(lblDeployTrainAt);
+		stationInnerPanel.add(lblDeployTrainAt);
 
 		deployStation1Btn.setFont(new Font("Josefin Sans", Font.PLAIN, 10));
 		deployStation1Btn.setBounds(64, 301, 73, 23);
 		deployStation1Btn.addMouseListener(this);
-		panel.add(deployStation1Btn);
+		stationInnerPanel.add(deployStation1Btn);
 
 		panel_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		panel_1.setBackground(new Color(0, 128, 0));
 		panel_1.setBounds(10, 502, 163, 133);
-		panel.add(panel_1);
+		stationInnerPanel.add(panel_1);
 		panel_1.setLayout(null);
 
 		submittedBy.setForeground(new Color(255, 255, 255));
@@ -230,48 +229,48 @@ public class GUIDrive extends JFrame implements MouseListener {
 		lblNewLabel_1.setForeground(new Color(255, 255, 255));
 		lblNewLabel_1.setFont(new Font("Dialog", Font.BOLD, 13));
 		lblNewLabel_1.setBounds(10, 257, 83, 23);
-		panel.add(lblNewLabel_1);
+		stationInnerPanel.add(lblNewLabel_1);
 
 		capacitySpinner.setModel(new SpinnerNumberModel(new Integer(5), new Integer(1), null, new Integer(1)));
 		capacitySpinner.setBounds(100, 257, 73, 20);
-		panel.add(capacitySpinner);
+		stationInnerPanel.add(capacitySpinner);
 
 		addStation5Btn = new JButton("Station 5");
 		addStation5Btn.setFont(new Font("Dialog", Font.PLAIN, 10));
 		addStation5Btn.setBounds(10, 111, 73, 23);
 		addStation5Btn.addMouseListener(this);
-		panel.add(addStation5Btn);
+		stationInnerPanel.add(addStation5Btn);
 
 		addStation6Btn = new JButton("Station 6");
 		addStation6Btn.setFont(new Font("Dialog", Font.PLAIN, 10));
 		addStation6Btn.setBounds(100, 111, 73, 23);
 		addStation6Btn.addMouseListener(this);
-		panel.add(addStation6Btn);
+		stationInnerPanel.add(addStation6Btn);
 
 		addStation8Btn = new JButton("Station 8");
 		addStation8Btn.setFont(new Font("Dialog", Font.PLAIN, 10));
 		addStation8Btn.setBounds(100, 146, 73, 23);
 		addStation8Btn.addMouseListener(this);
-		panel.add(addStation8Btn);
+		stationInnerPanel.add(addStation8Btn);
 
 		addStation7Btn = new JButton("Station 7");
 		addStation7Btn.setFont(new Font("Dialog", Font.PLAIN, 10));
 		addStation7Btn.setBounds(10, 146, 73, 23);
 		addStation7Btn.addMouseListener(this);
-		panel.add(addStation7Btn);
+		stationInnerPanel.add(addStation7Btn);
 
 		JLabel lblTrainsDeployed = new JLabel("Trains Deployed");
 		lblTrainsDeployed.setBounds(10, 370, 146, 20);
-		panel.add(lblTrainsDeployed);
+		stationInnerPanel.add(lblTrainsDeployed);
 		lblTrainsDeployed.setForeground(Color.WHITE);
 		lblTrainsDeployed.setFont(new Font("Dialog", Font.BOLD, 13));
 
-		lblNewLabel_2 = new JLabel("0");
-		lblNewLabel_2.setForeground(Color.WHITE);
-		lblNewLabel_2.setFont(new Font("Lucida Grande", Font.PLAIN, 50));
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setBounds(20, 407, 109, 76);
-		panel.add(lblNewLabel_2);
+		lblNumTrainsDeployed = new JLabel("0");
+		lblNumTrainsDeployed.setForeground(Color.WHITE);
+		lblNumTrainsDeployed.setFont(new Font("Lucida Grande", Font.PLAIN, 50));
+		lblNumTrainsDeployed.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNumTrainsDeployed.setBounds(20, 407, 109, 76);
+		stationInnerPanel.add(lblNumTrainsDeployed);
 
 		station1Panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		station1Panel.setBackground(new Color(0, 128, 0));
@@ -357,7 +356,7 @@ public class GUIDrive extends JFrame implements MouseListener {
 		scrollPane_3.setViewportView(station4Status);
 
 		station4Status.setFont(new Font("Josefin Sans", Font.PLAIN, 15));
-		
+
 		station5Panel = new JPanel();
 		station5Panel.setLayout(null);
 		station5Panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -376,6 +375,7 @@ public class GUIDrive extends JFrame implements MouseListener {
 		scrollPane_4.setBounds(10, 48, 257, 165);
 		station5Panel.add(scrollPane_4);
 		station5Status = new JTextArea();
+		station5Status.setFont(new Font("Dialog", Font.PLAIN, 15));
 		station5Status.setEditable(false);
 		scrollPane_4.setViewportView(station5Status);
 
@@ -385,7 +385,6 @@ public class GUIDrive extends JFrame implements MouseListener {
 		station6Panel.setBackground(new Color(0, 128, 0));
 		station6Panel.setBounds(799, 246, 277, 224);
 		contentPane.add(station6Panel);
-		
 
 		lblStation_1 = new JLabel("Station 6");
 		lblStation_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -393,12 +392,12 @@ public class GUIDrive extends JFrame implements MouseListener {
 		lblStation_1.setFont(new Font("Dialog", Font.PLAIN, 20));
 		lblStation_1.setBounds(10, 11, 257, 26);
 		station6Panel.add(lblStation_1);
-		
-		
+
 		scrollPane_5 = new JScrollPane();
 		scrollPane_5.setBounds(10, 48, 257, 165);
 		station6Panel.add(scrollPane_5);
 		station6Status = new JTextArea();
+		station6Status.setFont(new Font("Dialog", Font.PLAIN, 15));
 		station6Status.setEditable(false);
 		scrollPane_5.setViewportView(station6Status);
 
@@ -420,6 +419,7 @@ public class GUIDrive extends JFrame implements MouseListener {
 		scrollPane_6.setBounds(10, 48, 257, 165);
 		station7Panel.add(scrollPane_6);
 		station7Status = new JTextArea();
+		station7Status.setFont(new Font("Dialog", Font.PLAIN, 15));
 		station7Status.setEditable(false);
 		scrollPane_6.setViewportView(station7Status);
 
@@ -441,6 +441,7 @@ public class GUIDrive extends JFrame implements MouseListener {
 		scrollPane_7.setBounds(10, 48, 257, 165);
 		station8Panel.add(scrollPane_7);
 		station8Status = new JTextArea();
+		station8Status.setFont(new Font("Dialog", Font.PLAIN, 15));
 		station8Status.setEditable(false);
 		scrollPane_7.setViewportView(station8Status);
 	}
