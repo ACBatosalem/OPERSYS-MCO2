@@ -34,7 +34,7 @@ public class caltrain{
 	
 	public void station_load_train(Station s, int count){
 		new Train("Train " + trainCtr, count, s, this);
-		caltrainGUI.lblNumTrainsDeployed.setText(String.valueOf(trainCtr));
+		this.caltrainGUI.lblNumTrainsDeployed.setText(String.valueOf(trainCtr));
 		trainCtr++;
 	}
 	

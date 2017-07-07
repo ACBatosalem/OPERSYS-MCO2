@@ -142,5 +142,8 @@ public class Train implements Runnable{
 			}
 		}
 		sync.caltrainGUI.toggleButtons(true);
+		
+		if(sync.getTrainCtr() == 16)
+			sync.caltrainGUI.toggleButtons(false);
 	}
 }
