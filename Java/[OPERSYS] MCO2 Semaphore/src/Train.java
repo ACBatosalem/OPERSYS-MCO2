@@ -88,7 +88,7 @@ public class Train implements Runnable{
 			
 			
 			if(sync.caltrainGUI != null)
-				for(int i = 0; i < 4; i++){
+				for(int i = 0; i < 8; i++){
 					if(inStation.getName().equals(sync.getStations().get(i).getName())){
 						sync.caltrainGUI.stationList.get(i).append(str);		
 					}
@@ -121,7 +121,7 @@ public class Train implements Runnable{
 			System.out.println("\t" + str + inStation.getName() + "\n");
 			
 			if(sync.caltrainGUI != null)
-				for(int i = 0; i < 4; i++){
+				for(int i = 0; i < 8; i++){
 					if(inStation.getName().equals(sync.getStations().get(i).getName())){
 						sync.caltrainGUI.stationList.get(i).append(str);		
 					}
