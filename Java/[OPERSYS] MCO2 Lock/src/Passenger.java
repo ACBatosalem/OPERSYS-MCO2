@@ -10,6 +10,7 @@ public class Passenger implements Runnable{
 		this.name = name;
 		this.inStation = inStation;
 		this.sync = c;
+		this.t.start();
 	}
 	
 	public String getName(){
@@ -26,7 +27,7 @@ public class Passenger implements Runnable{
 					} catch (InterruptedException e) {
 					}finally{
 						if(inStation.getTrain().getLimit() > 0 && inStation.getPeople().size() > 0){
-							caltrain.getInstance().station_on_board(inStation);
+							sync.station_on_board(inStation);
 							inStation.getTrain().signalTrain();
 						}
 					}
