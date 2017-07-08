@@ -96,6 +96,8 @@ public class Train implements Runnable{
 
 			System.out.println("\tENTERING STATION: " + inStation.getName());
 			
+			sync.station_out_board(inStation);
+			
 			while(limit > 0 && inStation.getPeople().size() > 0){
 				sync.station_on_board(inStation);
 			}
@@ -129,5 +131,13 @@ public class Train implements Runnable{
 		
 		if(sync.getTrainCtr() == 16)
 			sync.caltrainGUI.toggleButtons(false);
+	}
+
+	public ArrayList<Passenger> getPassengers() {
+		return passengers;
+	}
+
+	public void setPassengers(ArrayList<Passenger> passengers) {
+		this.passengers = passengers;
 	}
 }

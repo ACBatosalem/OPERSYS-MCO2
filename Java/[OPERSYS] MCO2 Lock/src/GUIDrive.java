@@ -77,6 +77,7 @@ public class GUIDrive extends JFrame implements MouseListener {
 	public JButton addStation8Btn;
 	public JButton addStation7Btn;
 	public JLabel lblNumTrainsDeployed;
+	public JSpinner spinner;
 
 	public static void main(String[] args) {
 		GUIDrive gui;
@@ -271,6 +272,17 @@ public class GUIDrive extends JFrame implements MouseListener {
 		lblNumTrainsDeployed.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNumTrainsDeployed.setBounds(20, 407, 109, 76);
 		stationInnerPanel.add(lblNumTrainsDeployed);
+		
+		JLabel lblGetOffAt = new JLabel("Get off at");
+		lblGetOffAt.setForeground(Color.WHITE);
+		lblGetOffAt.setFont(new Font("Dialog", Font.BOLD, 13));
+		lblGetOffAt.setBounds(10, 181, 83, 20);
+		stationInnerPanel.add(lblGetOffAt);
+		
+		spinner = new JSpinner();
+		spinner.setBounds(100, 181, 73, 20);
+		spinner.setModel(new SpinnerNumberModel(new Integer(5), new Integer(1), null, new Integer(1)));
+		stationInnerPanel.add(spinner);
 
 		station1Panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		station1Panel.setBackground(new Color(0, 128, 0));
@@ -489,35 +501,35 @@ public class GUIDrive extends JFrame implements MouseListener {
 		// ALL PASSENGER ADDERS
 		if (arg0.getSource().equals(addStation1Btn)) {
 
-			c.station_wait_for_train(c.getStations().get(0));
+			c.station_wait_for_train(c.getStations().get(0),c.getStations().get(Integer.parseInt(spinner.getValue().toString())-1));
 
 		} else if (arg0.getSource().equals(addStation2Btn)) {
 
-			c.station_wait_for_train(c.getStations().get(1));
+			c.station_wait_for_train(c.getStations().get(1),c.getStations().get(Integer.parseInt(spinner.getValue().toString())-1));
 
 		} else if (arg0.getSource().equals(addStation3Btn)) {
 
-			c.station_wait_for_train(c.getStations().get(2));
+			c.station_wait_for_train(c.getStations().get(2),c.getStations().get(Integer.parseInt(spinner.getValue().toString())-1));
 
 		} else if (arg0.getSource().equals(addStation4Btn)) {
 
-			c.station_wait_for_train(c.getStations().get(3));
+			c.station_wait_for_train(c.getStations().get(3),c.getStations().get(Integer.parseInt(spinner.getValue().toString())-1));
 
 		} else if (arg0.getSource().equals(addStation5Btn)) {
 
-			c.station_wait_for_train(c.getStations().get(4));
+			c.station_wait_for_train(c.getStations().get(4),c.getStations().get(Integer.parseInt(spinner.getValue().toString())-1));
 
 		} else if (arg0.getSource().equals(addStation6Btn)) {
 
-			c.station_wait_for_train(c.getStations().get(5));
+			c.station_wait_for_train(c.getStations().get(5),c.getStations().get(Integer.parseInt(spinner.getValue().toString())-1));
 
 		} else if (arg0.getSource().equals(addStation7Btn)) {
 
-			c.station_wait_for_train(c.getStations().get(6));
+			c.station_wait_for_train(c.getStations().get(6),c.getStations().get(Integer.parseInt(spinner.getValue().toString())-1));
 
 		} else if (arg0.getSource().equals(addStation8Btn)) {
 
-			c.station_wait_for_train(c.getStations().get(7));
+			c.station_wait_for_train(c.getStations().get(7),c.getStations().get(Integer.parseInt(spinner.getValue().toString())-1));
 
 		}
 

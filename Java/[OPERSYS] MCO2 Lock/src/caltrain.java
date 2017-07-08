@@ -35,15 +35,24 @@ public class caltrain{
 		trainCtr++;
 	}
 	
-	public void station_wait_for_train(Station s){
+	public void station_wait_for_train(Station s, Station o){
 		String str;
-		s.addNewPassenger(peopleCtr);
+		s.addNewPassenger(peopleCtr, o);
 		
 		str = s.getPeople().get(s.getPeople().size()-1).getName() + " is now waiting.\n";		
 		if(caltrainGUI != null)
 			caltrainGUI.stationList.get(stations.indexOf(s)).append(str);
 		System.out.println("\t\t" + str);
 		peopleCtr++;
+	}
+	
+	public void station_out_board(Station s){
+		for(int i = 0 ; i < s.getTrain().getPassengers().size() ; i++){
+			if(s.getTrain().getPassengers().get(i).getOutStation().getName().equals(s.getName())){
+				s.getTrain().getOffBoard(s.getTrain().getPassengers().get(i));
+			}
+				
+		}
 	}
 	
 	public void station_on_board(Station s){

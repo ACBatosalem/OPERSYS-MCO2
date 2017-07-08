@@ -38,8 +38,8 @@ public class Station{
 		return this.nextStation;
 	}
 	
-	public void addNewPassenger(int ctr){
-		p.add(new Passenger("Passenger " + ctr, this, sync));
+	public void addNewPassenger(int ctr, Station o){
+		p.add(new Passenger("Passenger " + ctr, this, o, sync));
 	}
 	
 	public Passenger removePassenger(){
