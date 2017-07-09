@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+ import java.util.ArrayList;
 
 public class caltrain{
 	public static caltrain singleton;
