@@ -28,9 +28,11 @@ public class Passenger implements Runnable {
 	/* Other Functions */
 	@Override
 	public void run() {
-		while (true) {
+		while(true) {
+			/* If Train is Here */
 			while(boardStation.isTrainHere()) {
 				try {
+					/* Wait for Train */
 					boardStation.getArrivedTrain().waitTrain();
 					Thread.sleep(200);
 				} 

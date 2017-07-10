@@ -9,7 +9,8 @@ public class Station {
 		stationLock = new ReentrantLock();
 		stationSemaphor = stationLock.newCondition();
 		passStation = new ArrayList<Passenger>();
-		nextStation = null;
+		leftStation = null;
+		rightStation = null;
 		trainArrive = null;
 	}
 
@@ -18,8 +19,12 @@ public class Station {
 		return stationName;
 	}
 
-	public Station getNextStation() {
-		return nextStation;
+	public Station getLeftStation() {
+		return leftStation;
+	}
+
+	public Station getRightStation() {
+		return rightStation;
 	}
 
 	public Lock getStationLock() {
@@ -34,8 +39,12 @@ public class Station {
 		return trainArrive;
 	}
 
-	public setNextStation(Station nStation) {
-		nextStation = nStation;
+	public void setLeftStation(Station nStation) {
+		leftStation = nStation;
+	}
+
+	public void setRightStation(Station nStation) {
+		rightStation = nStation;
 	}
 
 	public setArrivedTrain(Train nTrain) {
@@ -43,8 +52,8 @@ public class Station {
 	}
 
 	/* Other Functions */
-	public void addNewPass(int count, Station s) {
-		passStation.add(new Passenger("Passenger" + count, s, sync, this));
+	public void addNewPass(int count, Station out) {
+		passStation.add(new Passenger("Passenger" + count, this, out, sync));
 	}
 
 	public Passenger removePass() {
@@ -67,7 +76,8 @@ public class Station {
 	private Condition stationSemaphore;
 
 	private String stationName;
-	private Station nextStation;
+	private Station leftStation;
+	private Station rightStation;
 	private Train trainArrive;
 	private ArrayList<Passenger> passStation;
 }

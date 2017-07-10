@@ -37,13 +37,13 @@ public class Train implements Runnable {
 	/* Other Functions */
 	public void rideTrain(Passenger pass) {
 		try {
-			capacity--;
+			trainCapacity--;
 			trainPass.add(pass);
 		} catch (Exception e) {}
 	}
 
 	public void leaveTrain(Passenger pass) {
-		capacity++;
+		trainCapacity++;
 		trainPass.remove(pass);
 	}
 
@@ -59,22 +59,26 @@ public class Train implements Runnable {
 
 	@Override
 	public void run() {
-		while(boardStat != null) {
-			boardStat.getLock().lock();
+		while (boardStat != null) {
+			/* Train arrives at Station */
+			boardStat.getStationLock().lock();
 			if(!boardStat.isTrainHere())
 				boardStat.setArrivedTrain(this);
 
+			/* Passengers get off at train */
 			sync.station_out_board(boardStat);
-		
+
+			/* Passengers ride the train */		
 			while(boardStat.getPassengers().size() > 0 &&
 				  trainCapacity > 0)
 				sync.station_on_board(boardStat);
 		
-			boardStat.removeTrain();
+			/* Train leaves Station */
+			boardStat.trainLeft();
 			boardStat.getLock().unlock();
 
-			try { Thread.sleep(1500); }
-			catch(Exception e) {}
+			try { Thread.sleep(15); }
+			catch(InterruptedException e) {}
 		}
 	}
 
