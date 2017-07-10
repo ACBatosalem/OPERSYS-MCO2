@@ -30,19 +30,19 @@ public class Passenger implements Runnable {
 	public void run() {
 		while(true) {
 			/* If Train is Here */
-			while(boardStation.isTrainHere()) {
+			while(boardStat.isTrainHere()) {
 				try {
 					/* Wait for Train */
-					boardStation.getArrivedTrain().waitTrain();
+					boardStat.getArrivedTrain().waitTrain();
 					Thread.sleep(200);
 				} 
 				catch (InterruptedException e) {}
 				finally {
-					if (boardStation.getArrivedTrain().getCapacity() > 0 &&
-						boardStation.getPassengers().size() > 0) 
+					if (boardStat.getArrivedTrain().getCapacity() > 0 &&
+						boardStat.getPassengers().size() > 0) 
 					{
-						sync.station_on_board(boardStation);
-						boardStation.getArrivedTrain().signalTrain();
+						sync.station_on_board(boardStat);
+						boardStat.getArrivedTrain().signalTrain();
 					}
 				}
 			}

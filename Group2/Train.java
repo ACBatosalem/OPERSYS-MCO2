@@ -68,11 +68,6 @@ public class Train implements Runnable {
 			/* Passengers get off at train */
 			sync.station_out_board(boardStat);
 
-			/* Passengers ride the train */		
-			while(boardStat.getPassengers().size() > 0 &&
-				  trainCapacity > 0)
-				sync.station_on_board(boardStat);
-		
 			/* Train leaves Station */
 			boardStat.trainLeft();
 			boardStat.getLock().unlock();
