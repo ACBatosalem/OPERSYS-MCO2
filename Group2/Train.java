@@ -1,10 +1,14 @@
 import java.util.*;
+import java.util.concurrent.*;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Train implements Runnable {
 	/* Constructors */
 	public Train(String name, int numPass, Station in, CalTrain system) {
 		sync = system;
-		boardTrain = boardStation.getLock().newCondition();
+		boardTrain = boardStat.getStationLock().newCondition();
 		trainName = name;
 		trainCapacity = numPass;
 		trainPass = new ArrayList<Passenger>();
@@ -18,7 +22,7 @@ public class Train implements Runnable {
 		return trainName;
 	}
 
-	public String getCurrNumPass() {
+	public int getCurrNumPass() {
 		return trainPass.size();
 	}
 
@@ -27,7 +31,7 @@ public class Train implements Runnable {
 	}
 
 	public ArrayList<Passenger> getPassengers() {
-		return passengers;
+		return trainPass;
 	}
 
 	public void setPassengers(ArrayList<Passenger> pass) {
@@ -66,11 +70,11 @@ public class Train implements Runnable {
 				boardStat.setArrivedTrain(this);
 
 			/* Passengers get off at train */
-			sync.station_out_board(boardStat);
+			sync.station_off_board(boardStat);
 
 			/* Train leaves Station */
 			boardStat.trainLeft();
-			boardStat.getLock().unlock();
+			boardStat.getStationLock().unlock();
 
 			try { Thread.sleep(15); }
 			catch(InterruptedException e) {}

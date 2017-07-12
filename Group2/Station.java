@@ -1,5 +1,8 @@
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Station {
 	/* Constructors */
@@ -7,7 +10,7 @@ public class Station {
 		sync = system;
 		stationName = name;
 		stationLock = new ReentrantLock();
-		stationSemaphor = stationLock.newCondition();
+		stationSemaphore = stationLock.newCondition();
 		passStation = new ArrayList<Passenger>();
 		leftStation = null;
 		rightStation = null;
@@ -47,7 +50,7 @@ public class Station {
 		rightStation = nStation;
 	}
 
-	public setArrivedTrain(Train nTrain) {
+	public void setArrivedTrain(Train nTrain) {
 		trainArrive = nTrain;
 	}
 
