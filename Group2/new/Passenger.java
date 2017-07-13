@@ -14,7 +14,7 @@ public class Passenger implements Runnable {
 	public void run() {
 		while(true) {
 			//System.out.println(test);
-			sync.station_wait_for_train(boardStation, test);
+			sync.station_wait_for_train(boardStation, test, passThread);
 			//System.out.println(test+"HAAAAAAAAAAA");
 			try {Thread.sleep(60);} catch(Exception e){}
 		}
