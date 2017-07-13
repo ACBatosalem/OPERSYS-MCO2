@@ -7,18 +7,19 @@ public class CalTrain {
 	}
 
 	public void station_load_train(Station station, int count) {
-	//	station.getLock().lock();
+		//station.getLock().lock();
 		station.setEmptySeats(count);
 		System.out.println("Train arrives (Count: " + count + ")->");
 		while(station.getWaitingPass() > 0 && station.getEmptySeats() > 0) {
 			station.signalTrain();
 			try { station.waitPassSeated(); 
-				System.out.println("Train left");}
+				}
 			catch(Exception e) {}
 		}
 
 		station.setEmptySeats(0);
-	//	station.getLock().unlock();
+		System.out.println("Train left");
+		//station.getLock().unlock();
 	}
 
 	public void station_wait_for_train(Station station, int test, Thread pThread) {
@@ -28,9 +29,9 @@ public class CalTrain {
 		System.out.println(station.getStandingPass() +" " + station.getEmptySeats());
 		while(station.getStandingPass() == station.getEmptySeats()) {
 			try {
-				//Thread.sleep(100);
+				
 				station.waitTrain(); 
-
+				//Thread.sleep(60);
 				 }
 			catch(Exception e) {}
 		}
@@ -40,13 +41,13 @@ public class CalTrain {
 		station.getLock().unlock();
 	}
 
-	public void station_on_board(Station station) {
+	public void station_on_board(Station station, boolean all) {
 		station.getLock().lock();
 		
 		station.decStandPass();
 		station.decEmptySeats();
-		System.out.println("Passenger on board");
-		if (station.getEmptySeats() == 0 || station.getStandingPass() == 0)
+		System.out.println("Passenger on board" + all);
+		if (station.getEmptySeats() == 0 || station.getStandingPass() == 0 && all)
 			station.signalPassSeated();
 		station.getLock().unlock();
 	}

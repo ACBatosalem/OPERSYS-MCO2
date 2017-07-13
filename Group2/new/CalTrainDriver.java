@@ -8,7 +8,7 @@ public class CalTrainDriver {
 		ctrain.station_load_train(firstStation, 0);
 		ctrain.station_load_train(firstStation, 10);
 
-		int tot_passengers = 5;
+		int tot_passengers = 10;
 		int passengers_left = tot_passengers;
 		for(int i=0;i<tot_passengers;i++) {
 			Passenger robot = new Passenger(firstStation, ctrain, i);
@@ -24,7 +24,7 @@ public class CalTrainDriver {
 		int max_free_seats = 50;
 		int pass = 0;
 		while (passengers_left > 0) {
-			int free_seats = 5;
+			int free_seats = 10;
 			System.out.println("Train entering station with " + free_seats + " free seats");
 			load_train_returned = false;
 			Train train = new Train(firstStation, ctrain, free_seats);
@@ -36,15 +36,13 @@ public class CalTrainDriver {
 			while (threads_reaped < threads_to_reap) {
 				if (threads_completed > 0) {
 					threads_reaped++;
-			System.out.println("reaped: "+threads_reaped+" to reap: "+threads_to_reap +" complete"+threads_completed);
 					
-					ctrain.station_on_board(firstStation);
-
-					threads_completed++;
+					ctrain.station_on_board(firstStation, threads_reaped == threads_to_reap);
+					threads_completed--;
 				}
 			}
 
-			for(int i=0;i<10;i++) {
+		/*	for(int i=0;i<10;i++) {
 				if (i > 5 && load_train_returned)
 					break;
 			}
@@ -52,18 +50,16 @@ public class CalTrainDriver {
 			if(!load_train_returned) {
 				System.out.println("Error: station_load_train failed to return");
 				break;
-			}
+			}*/
 
-			System.out.println("???????????????????reaped: "+threads_reaped+" to reap: "+threads_to_reap +" complete"+threads_completed);
 
-			/*while(threads_completed > 0) {
+			while(threads_completed > 0) {
 				threads_reaped++;
 				threads_completed--;
-			}*/
+			}
 
 			passengers_left -= threads_reaped;
 			tot_passengers_boarded += threads_reaped;
-			System.out.println("!!!!!!!!!!reaped: "+threads_reaped+" to reap: "+threads_to_reap +" complete"+threads_completed);
 
 			if (threads_to_reap != threads_reaped) {
 				System.out.println("Error: Too many passengers on this train!");
