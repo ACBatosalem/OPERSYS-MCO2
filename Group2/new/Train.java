@@ -15,9 +15,10 @@ public class Train implements Runnable {
 	public void run() {
 		while(true) {
 			boardStation.train_num = trainNum;
-			sync.station_load_train(boardStation, free);
+			sync.station_load_train(boardStation, free, trainNum);
 			//boardStation.train_num = -1;
 			try {Thread.sleep(60);} catch(Exception e){}
+			break;
 		}
 	}
 

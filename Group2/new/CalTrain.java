@@ -6,31 +6,34 @@ public class CalTrain {
 		return new Station();
 	}
 
-	public void station_load_train(Station station, int count) {
-		station.getLock().lock();
-		station.setEmptySeats(count);
-		station.setNumSeats(count);
-		station.getLock().unlock();
-		System.out.println("Train arrives (Count: " + count + ") Train Num->"+station.train_num);
-		station.signalTrain();
-		while(station.getWaitingPass() > 0 && station.getEmptySeats() > 0) {
-			
-		//	System.out.println("Outside: Waiting"+ station.getWaitingPass() + " "+ station.getEmptySeats());
+	public void station_load_train(Station station, int count, int trainNum) {
+		if (trainNum == station.train_num) {
+			station.getLock().lock();
+			station.setEmptySeats(count);
+			station.setNumSeats(count);
+			station.getLock().unlock();
+			System.out.println("Train arrives (Count: " + count + ") Train Num->"+station.train_num);
+			station.signalTrain();
+			while(station.getWaitingPass() > 0 && station.getEmptySeats() > 0) {
+				
+			//	System.out.println("Outside: Waiting"+ station.getWaitingPass() + " "+ station.getEmptySeats());
 
-			try { 
-		//		System.out.println("Waiting"+ station.getWaitingPass() + " "+ station.getEmptySeats());
-				station.waitPassSeated(); 
-				}
-			catch(Exception e) {}
+				try { 
+			//		System.out.println("Waiting"+ station.getWaitingPass() + " "+ station.getEmptySeats());
+					station.waitPassSeated(); 
+					}
+				catch(Exception e) {}
+			}
+
+			System.out.println("wait finished: "+"Waiting"+ station.getWaitingPass() + " "+ station.getEmptySeats());
+
+			station.getLock().lock();
+			station.setEmptySeats(0);
+			station.setNumSeats(0);
+			System.out.println("Train left");
+			station.train_num = -1;
+			station.getLock().unlock();
 		}
-
-		System.out.println("wait finished: "+"Waiting"+ station.getWaitingPass() + " "+ station.getEmptySeats());
-
-		station.getLock().lock();
-		station.setEmptySeats(0);
-		station.setNumSeats(0);
-		System.out.println("Train left");
-		station.getLock().unlock();
 	}
 
 	public boolean station_wait_for_train(Station station, int test, boolean alreadyWaited) {
