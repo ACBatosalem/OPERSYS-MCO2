@@ -9,7 +9,7 @@ public class CalTrainDriver {
 	//	ctrain.station_load_train(firstStation, 0);
 	//	ctrain.station_load_train(firstStation, 10);
 
-		int tot_passengers = 10;
+		int tot_passengers = 15;
 		int passengers_left = tot_passengers;
 		for(int i=0;i<tot_passengers;i++) {
 			Passenger robot = new Passenger(firstStation, ctrain, i);

@@ -14,8 +14,12 @@ public class Train implements Runnable {
 	@Override
 	public void run() {
 		while(true) {
+			//while(boardStation.train_num != -1);
+			boardStation.getLock().lock();
 			boardStation.train_num = trainNum;
+			boardStation.getLock().unlock();
 			sync.station_load_train(boardStation, free, trainNum);
+			
 			//boardStation.train_num = -1;
 			try {Thread.sleep(60);} catch(Exception e){}
 			break;

@@ -7,7 +7,7 @@ public class CalTrain {
 	}
 
 	public void station_load_train(Station station, int count, int trainNum) {
-		if (trainNum == station.train_num) {
+		//if (trainNum == station.train_num) {
 			station.getLock().lock();
 			station.setEmptySeats(count);
 			station.setNumSeats(count);
@@ -33,7 +33,7 @@ public class CalTrain {
 			System.out.println("Train left");
 			station.train_num = -1;
 			station.getLock().unlock();
-		}
+		//}
 	}
 
 	public boolean station_wait_for_train(Station station, int test, boolean alreadyWaited) {
