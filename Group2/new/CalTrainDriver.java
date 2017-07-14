@@ -1,5 +1,6 @@
 import java.util.*;
 
+
 public class CalTrainDriver {
 	public static void main(String[] args) {
 		CalTrain ctrain = new CalTrain();
@@ -35,17 +36,20 @@ public class CalTrainDriver {
 			int threads_reaped = 0;
 			while (threads_reaped < threads_to_reap) {
 				if (threads_completed > 0) {
+					
 					threads_reaped++;
 					
 					ctrain.station_on_board(firstStation, threads_reaped == threads_to_reap);
 					threads_completed--;
 				}
 			}
+					
 
 		/*	for(int i=0;i<10;i++) {
 				if (i > 5 && load_train_returned)
 					break;
 			}
+
 
 			if(!load_train_returned) {
 				System.out.println("Error: station_load_train failed to return");
@@ -66,7 +70,7 @@ public class CalTrainDriver {
 			}
 
 			pass++;
-			System.out.println("Passengers left: "+passengers_left);
+			System.out.println("Passengers left: "+tot_passengers_boarded);
 		}
 
 		if (tot_passengers_boarded == tot_passengers) {
