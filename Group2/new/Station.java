@@ -12,6 +12,7 @@ public class Station {
 		waiting_passengers = 0;
 		train_empty_seats = 0;
 		train_stand_pass = 0;
+		train_num_seats = 0;
 	}
 
 	/* Getters and Setters */
@@ -35,12 +36,20 @@ public class Station {
 		return train_empty_seats;
 	}
 
+	public int getNumSeats() {
+		return train_num_seats;
+	}
+
 	public int getStandingPass() {
 		return train_stand_pass;
 	}
 
 	public void setEmptySeats(int seats) {
 		train_empty_seats = seats;
+	}
+
+	public void setNumSeats(int seats) {
+		train_num_seats = seats;
 	}
 
 	/* Other Functions */
@@ -94,5 +103,6 @@ public class Station {
 	private Lock lock;
 	private int waiting_passengers;
 	private int train_empty_seats;
+	private int train_num_seats;
 	private int train_stand_pass;
 }

@@ -3,6 +3,8 @@ public class Passenger implements Runnable {
 		boardStation = in;
 		sync = system;
 		test = i;
+		alreadyBoarded = false;
+		alreadyWaited = false;
 		passThread.start();
 	}
 
@@ -14,7 +16,10 @@ public class Passenger implements Runnable {
 	public void run() {
 		while(true) {
 			//System.out.println(test);
-			sync.station_wait_for_train(boardStation, test, passThread);
+			while(!alreadyBoarded){
+				alreadyBoarded = sync.station_wait_for_train(boardStation, test, alreadyWaited);
+				alreadyWaited = true;
+			}
 			//System.out.println(test+"HAAAAAAAAAAA");
 			try {Thread.sleep(60);} catch(Exception e){}
 		}
@@ -23,5 +28,7 @@ public class Passenger implements Runnable {
 	private CalTrain sync;
 	private Station boardStation;
 	private int test;
+	private boolean alreadyBoarded;
+	private boolean alreadyWaited;
 	private Thread passThread = new Thread(this);
 }

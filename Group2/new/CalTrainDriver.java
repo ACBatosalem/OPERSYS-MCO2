@@ -25,7 +25,7 @@ public class CalTrainDriver {
 		int max_free_seats = 50;
 		int pass = 0;
 		while (passengers_left > 0) {
-			int free_seats = 10;
+			int free_seats = 5;
 			System.out.println("Train entering station with " + free_seats + " free seats");
 			load_train_returned = false;
 			Train train = new Train(firstStation, ctrain, free_seats);
@@ -54,13 +54,13 @@ public class CalTrainDriver {
 			if(!load_train_returned) {
 				System.out.println("Error: station_load_train failed to return");
 				break;
-			}*/
+			}
 
 
 			while(threads_completed > 0) {
 				threads_reaped++;
 				threads_completed--;
-			}
+			}*/
 
 			passengers_left -= threads_reaped;
 			tot_passengers_boarded += threads_reaped;
@@ -70,11 +70,13 @@ public class CalTrainDriver {
 			}
 
 			pass++;
-			System.out.println("Passengers left: "+tot_passengers_boarded);
+			System.out.println("Passengers Left: "+passengers_left);
+			System.out.println("Passengers boarded: "+tot_passengers_boarded);
 		}
 
 		if (tot_passengers_boarded == tot_passengers) {
 			System.out.println("Looks good!");
+			System.exit(0);
 		}
 		else {
 			System.out.println("Error: expected " + tot_passengers + " total boarded passengers, but got " 
