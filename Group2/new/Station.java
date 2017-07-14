@@ -13,6 +13,8 @@ public class Station {
 		train_empty_seats = 0;
 		train_stand_pass = 0;
 		train_num_seats = 0;
+		train_stand_pass = 0;
+		train_num = -1;
 	}
 
 	/* Getters and Setters */
@@ -105,4 +107,5 @@ public class Station {
 	private int train_empty_seats;
 	private int train_num_seats;
 	private int train_stand_pass;
+	public int train_num;
 }

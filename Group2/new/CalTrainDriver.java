@@ -6,8 +6,8 @@ public class CalTrainDriver {
 		CalTrain ctrain = new CalTrain();
 		Station firstStation = new Station();
 
-		ctrain.station_load_train(firstStation, 0);
-		ctrain.station_load_train(firstStation, 10);
+	//	ctrain.station_load_train(firstStation, 0);
+	//	ctrain.station_load_train(firstStation, 10);
 
 		int tot_passengers = 10;
 		int passengers_left = tot_passengers;
@@ -19,7 +19,7 @@ public class CalTrainDriver {
 		//Passenger robot = new Passenger(firstStation, ctrain, 2);
 		//threads_completed++;
 
-		ctrain.station_load_train(firstStation, 0);
+	//	ctrain.station_load_train(firstStation, 0);
 
 		int tot_passengers_boarded = 0;
 		int max_free_seats = 50;
@@ -28,7 +28,7 @@ public class CalTrainDriver {
 			int free_seats = 5;
 			System.out.println("Train entering station with " + free_seats + " free seats");
 			load_train_returned = false;
-			Train train = new Train(firstStation, ctrain, free_seats);
+			Train train = new Train(firstStation, ctrain, free_seats, pass);
 			load_train_returned = true;
 
 			int threads_to_reap = Math.min(passengers_left, free_seats);
@@ -61,6 +61,7 @@ public class CalTrainDriver {
 				threads_reaped++;
 				threads_completed--;
 			}*/
+			//try{Thread.sleep(1000);} catch(Exception e){}
 
 			passengers_left -= threads_reaped;
 			tot_passengers_boarded += threads_reaped;
