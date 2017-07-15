@@ -1,8 +1,9 @@
 public class Passenger implements Runnable {
 	public Passenger(Station in, CalTrain system, int i) {
 		boardStation = in;
+		boardStation.addPassenger(this);
 		sync = system;
-		test = i;
+		passNum = i;
 		alreadyBoarded = false;
 		alreadyWaited = false;
 		passThread.start();
@@ -12,22 +13,24 @@ public class Passenger implements Runnable {
 		return boardStation;
 	}
 
+	public int getPassNum() {
+		return passNum;
+	}
+
 	@Override
 	public void run() {
 		while(true) {
-			//System.out.println(test);
-			while(!alreadyBoarded){
-				alreadyBoarded = sync.station_wait_for_train(boardStation, test, alreadyWaited);
+			while(!alreadyBoarded) {
+				alreadyBoarded = sync.station_wait_for_train(boardStation, this, alreadyWaited);
 				alreadyWaited = true;
 			}
-			//System.out.println(test+"HAAAAAAAAAAA");
-			try {Thread.sleep(60);} catch(Exception e){}
+			try {Thread.sleep(200);} catch(Exception e){}
 		}
 	}
 
 	private CalTrain sync;
 	private Station boardStation;
-	private int test;
+	private int passNum;
 	private boolean alreadyBoarded;
 	private boolean alreadyWaited;
 	private Thread passThread = new Thread(this);

@@ -16,7 +16,9 @@ public class Station {
 		train_stand_pass = 0;
 		train_num = -1;
 		stationNum = num;
-		nextStation = null;
+		leftStation = null;
+		rightStation = null;
+		waitPassengers = new ArrayList<Passenger>();
 	}
 
 	/* Getters and Setters */
@@ -48,12 +50,26 @@ public class Station {
 		return train_stand_pass;
 	}
 
-	public Station getNextStation() {
-		return nextStation;
+	public Station getLeftStation() {
+		return leftStation;
+	}
+
+	public Station getRightStation() {
+		return rightStation;
 	}
 
 	public int getStationNum() {
 		return stationNum;
+	}
+
+	public ArrayList<Passenger> getWaitPassengers() {
+		return waitPassengers;
+	}
+
+	public Station getNextStation(boolean toTheRight) {
+		if (toTheRight)
+			return rightStation;
+		return leftStation;
 	}
 
 	public void setEmptySeats(int seats) {
@@ -64,25 +80,40 @@ public class Station {
 		train_num_seats = seats;
 	}
 
-	public void setNextStation(Station next) {
-		nextStation = next;
+	public void setLeftStation(Station next) {
+		leftStation = next;
+	}
+
+	public void setRightStation(Station next) {
+		rightStation = next;
 	}
 
 	/* Other Functions */
-	public void incWaitPass() {
-		waiting_passengers++;
+	public void addPassenger(Passenger newPass) {
+		waitPassengers.add(newPass);
+		waiting_passengers = waitPassengers.size();
+	}
+
+	public void decWaitPass(Passenger pass) {
+		for(Passenger p : waitPassengers) {
+			if (p.getPassNum() == pass.getPassNum()) {
+				waitPassengers.remove(p);
+				break;
+			}
+		}
+		waiting_passengers = waitPassengers.size();
 	}
 
 	public void incStandPass() {
 		train_stand_pass++;
 	}
 
-	public void decWaitPass() {
-		waiting_passengers--;
-	}
-
 	public void decStandPass() {
 		train_stand_pass--;
+	}
+
+	public void incEmptySeats() {
+		train_empty_seats++;
 	}
 
 	public void decEmptySeats() {
@@ -113,15 +144,23 @@ public class Station {
 		} catch(Exception e){}
 	}
 
+	public String displayNextStations() {
+		String left = (leftStation == null) ? "null" : "Station " + leftStation.getStationNum(); 
+		String right = (rightStation == null) ? "null" : "Station " + rightStation.getStationNum(); 
+		return "Station " + stationNum + ": Left Station = " + left + " Right Station = " + right;
+	}
+
 	/* Variables */
 	private Condition train_arrived;
 	private Condition all_pass_seated;
 	private Lock lock;
 	private int waiting_passengers;
+	private ArrayList<Passenger> waitPassengers;
 	private int train_empty_seats;
 	private int train_num_seats;
 	private int train_stand_pass;
 	private int stationNum;
-	private Station nextStation;
+	private Station leftStation;
+	private Station rightStation;
 	public int train_num;
 }
