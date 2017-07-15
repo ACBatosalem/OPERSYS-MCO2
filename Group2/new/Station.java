@@ -9,19 +9,17 @@ public class Station {
 		train_arrived = new ReentrantLock().newCondition();
 		all_pass_seated = new ReentrantLock().newCondition();
 		lock = new ReentrantLock();
-		waiting_passengers = 0;
-		train_empty_seats = 0;
-		train_stand_pass = 0;
-		train_num_seats = 0;
-		train_stand_pass = 0;
-		train_num = -1;
 		stationNum = num;
-		leftStation = null;
-		rightStation = null;
-		waitPassengers = new ArrayList<Passenger>();
+		leftEmptySeats = rightEmptySeats = 0;
+		leftTrainPass = rightTrainPass = 0;
+		leftTotalSeats = rightTotalSeats = 0;
+		left_train = right_train = null;
+		leftStation = rightStation = null;
+		waitLeftPassengers = new ArrayList<Passenger>();
+		waitRightPassengers = new ArrayList<Passenger>();
 	}
 
-	/* Getters and Setters */
+	/* Getters */
 	public Condition getArrivedTrain() {
 		return train_arrived;
 	}
@@ -34,20 +32,54 @@ public class Station {
 		return lock;
 	}
 
-	public int getWaitingPass() {
-		return waiting_passengers;
+	public int getStationNum() {
+		return stationNum;
 	}
 
-	public int getEmptySeats() {
-		return train_empty_seats;
+	public Train getLeftTrain() {
+		return left_train;
 	}
 
-	public int getNumSeats() {
-		return train_num_seats;
+	public Train getRightTrain() {
+		return right_train;
 	}
 
-	public int getStandingPass() {
-		return train_stand_pass;
+	public int getLeftWaitPass() {
+		return waitLeftPassengers.size();
+	}
+
+	public int getRightWaitPass() {
+		return waitRightPassengers.size();
+	}
+
+	public int getWaitingPass(boolean direction) {
+		if (direction)
+			return getRightWaitPass();
+		return getLeftWaitPass();
+	}
+
+	public int getLeftEmptySeats() {
+		return leftEmptySeats;
+	}
+
+	public int getRightEmptySeats() {
+		return rightEmptySeats;
+	}
+
+	public int getLeftTotalSeats() {
+		return leftTotalSeats;
+	}
+
+	public int getRightTotalSeats() {
+		return rightTotalSeats;
+	}
+
+	public int getLeftTrainPass() {
+		return leftTrainPass;
+	}
+
+	public int getRightTrainPass() {
+		return rightTrainPass;
 	}
 
 	public Station getLeftStation() {
@@ -58,26 +90,33 @@ public class Station {
 		return rightStation;
 	}
 
-	public int getStationNum() {
-		return stationNum;
+	public ArrayList<Passenger> getLeftPassengers() {
+		return waitLeftPassengers;
 	}
 
-	public ArrayList<Passenger> getWaitPassengers() {
-		return waitPassengers;
+	public ArrayList<Passenger> getRightPassengers() {
+		return waitRightPassengers;
 	}
 
-	public Station getNextStation(boolean toTheRight) {
-		if (toTheRight)
-			return rightStation;
-		return leftStation;
+	public ArrayList<Passenger> getWaitPassengers(boolean direction) {
+		if (direction)
+			return getRightPassengers();
+		return getLeftPassengers();
 	}
 
-	public void setEmptySeats(int seats) {
-		train_empty_seats = seats;
+	/* Setters */
+	public void setEmptySeats(boolean direction, int seats) {
+		if(direction)
+			rightEmptySeats = seats;
+		else
+			leftEmptySeats = seats;
 	}
 
-	public void setNumSeats(int seats) {
-		train_num_seats = seats;
+	public void setTotalSeats(boolean direction, int seats) {
+		if(direction)
+			rightTotalSeats = seats;
+		else
+			leftTotalSeats = seats;
 	}
 
 	public void setLeftStation(Station next) {
@@ -88,36 +127,67 @@ public class Station {
 		rightStation = next;
 	}
 
-	/* Other Functions */
-	public void addPassenger(Passenger newPass) {
-		waitPassengers.add(newPass);
-		waiting_passengers = waitPassengers.size();
+	public void setLeftTrain(Train train) {
+		left_train = train;
 	}
 
-	public void decWaitPass(Passenger pass) {
-		for(Passenger p : waitPassengers) {
-			if (p.getPassNum() == pass.getPassNum()) {
-				waitPassengers.remove(p);
-				break;
+	public void setRightTrain(Train train) {
+		right_train = train;
+	}
+
+	/* Other Functions */
+	public void addPassenger(Passenger newPass, boolean direction) {
+		if (direction)
+			waitRightPassengers.add(newPass);
+		else
+			waitLeftPassengers.add(newPass);
+	}
+
+	public void decWaitPass(Passenger pass, boolean direction) {
+		if (direction) {
+			for(Passenger p : waitRightPassengers) {
+				if (p.getPassNum() == pass.getPassNum()) {
+					waitRightPassengers.remove(p);
+					break;
+				}
 			}
 		}
-		waiting_passengers = waitPassengers.size();
+		else {
+			for(Passenger p : waitLeftPassengers) {
+				if (p.getPassNum() == pass.getPassNum()) {
+					waitLeftPassengers.remove(p);
+					break;
+				}
+			}
+		}
 	}
 
-	public void incStandPass() {
-		train_stand_pass++;
+	public void incStandPass(boolean direction) {
+		if (direction)
+			rightTrainPass++;
+		else
+			leftTrainPass++;
 	}
 
-	public void decStandPass() {
-		train_stand_pass--;
+	public void decStandPass(boolean direction) {
+		if (direction)
+			rightTrainPass--;
+		else
+			leftTrainPass--;
 	}
 
-	public void incEmptySeats() {
-		train_empty_seats++;
+	public void incEmptySeats(boolean direction) {
+		if (direction)
+			rightEmptySeats++;
+		else
+			leftEmptySeats++;
 	}
 
-	public void decEmptySeats() {
-		train_empty_seats--;
+	public void decEmptySeats(boolean direction) {
+		if (direction)
+			rightEmptySeats--;
+		else
+			leftEmptySeats--;
 	}
 
 	public void waitPassSeated() {
@@ -144,6 +214,12 @@ public class Station {
 		} catch(Exception e){}
 	}
 
+	public Station getNextStation(boolean toTheRight) {
+		if (toTheRight)
+			return rightStation;
+		return leftStation;
+	}
+
 	public String displayNextStations() {
 		String left = (leftStation == null) ? "null" : "Station " + leftStation.getStationNum(); 
 		String right = (rightStation == null) ? "null" : "Station " + rightStation.getStationNum(); 
@@ -154,13 +230,11 @@ public class Station {
 	private Condition train_arrived;
 	private Condition all_pass_seated;
 	private Lock lock;
-	private int waiting_passengers;
-	private ArrayList<Passenger> waitPassengers;
-	private int train_empty_seats;
-	private int train_num_seats;
-	private int train_stand_pass;
 	private int stationNum;
-	private Station leftStation;
-	private Station rightStation;
-	public int train_num;
+	private ArrayList<Passenger> waitLeftPassengers, waitRightPassengers;
+	private int leftEmptySeats, rightEmptySeats;
+	private int leftTotalSeats, rightTotalSeats;
+	private int leftTrainPass, rightTrainPass;
+	private Station leftStation, rightStation;
+	private Train left_train, right_train;
 }

@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Train implements Runnable {
 	public Train(Station in, CalTrain system, int free, int trainNum) {
 		boardStation = in;
@@ -7,6 +9,7 @@ public class Train implements Runnable {
 		this.trainNum = trainNum;
 		toTheRight = true;
 		trainThread.start();
+		riding = new ArrayList<Passenger>();
 	}
 
 	public int getTrainNum() {
@@ -17,23 +20,58 @@ public class Train implements Runnable {
 		return free;
 	}
 
+	public int getNumSeats() {
+		return numSeats;
+	}
+
 	public Station getBoardStation() {
 		return boardStation;
+	}
+
+	public boolean getDirection() {
+		return toTheRight;
+	}
+
+	public ArrayList<Passenger> getRiding() {
+		return riding;
+	}
+
+	public void addRiding(Passenger pass) {
+		riding.add(pass);
+		free = numSeats - riding.size();
+	}
+
+	public void removeRiding(Passenger pass) {
+		riding.remove(pass);
+		free = numSeats - riding.size();
 	}
 
 	@Override
 	public void run() {
 		while(true) {
-			if (boardStation.train_num == -1) {
-				boardStation.train_num = trainNum;
-				sync.station_load_train(boardStation, free, numSeats, trainNum);
-				try {Thread.sleep(1000);} catch(Exception e){}
+			if(toTheRight && boardStation.getRightTrain() == null) {
+				boardStation.setRightTrain(this);
+				sync.station_load_train(boardStation, this, toTheRight);
 				if (boardStation.getRightStation() == null)
 					toTheRight = false;
 				else if (boardStation.getLeftStation() == null)
 					toTheRight = true;
 				boardStation = boardStation.getNextStation(toTheRight);
-				System.out.println("Train " + trainNum + " going to next station: " + boardStation.getStationNum());
+				System.out.println("Train " + trainNum + " going to next station: " 
+							       + boardStation.getStationNum());
+				try {Thread.sleep(1500);} catch(Exception e) {}
+			}
+			else if(!toTheRight && boardStation.getLeftTrain() == null) {
+				boardStation.setLeftTrain(this);
+				sync.station_load_train(boardStation, this, toTheRight);
+				if (boardStation.getRightStation() == null)
+					toTheRight = false;
+				else if (boardStation.getLeftStation() == null)
+					toTheRight = true;
+				boardStation = boardStation.getNextStation(toTheRight);
+				System.out.println("Train " + trainNum + " going to next station: " 
+							       + boardStation.getStationNum());
+				try {Thread.sleep(1500);} catch(Exception e) {}
 			}
 		}
 	}
@@ -43,6 +81,6 @@ public class Train implements Runnable {
 	private int free, trainNum;
 	private final int numSeats;
 	private boolean toTheRight; /* True = Right. False = Left */
-	private Thread trainThread = new Thread(this);
-
+	public Thread trainThread = new Thread(this);
+	private ArrayList<Passenger> riding;
 }
