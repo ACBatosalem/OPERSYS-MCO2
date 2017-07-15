@@ -13,12 +13,14 @@ public class Train implements Runnable {
 
 	@Override
 	public void run() {
-		while(true) {
-			boardStation.train_num = trainNum;
-			sync.station_load_train(boardStation, free, trainNum);
-			//boardStation.train_num = -1;
-			try {Thread.sleep(60);} catch(Exception e){}
-			break;
+		while(boardStation != null) {
+			if (boardStation.train_num == -1) {
+				boardStation.train_num = trainNum;
+				sync.station_load_train(boardStation, free, trainNum);
+				try {Thread.sleep(60);} catch(Exception e){}
+				boardStation = boardStation.getNextStation();
+				System.out.println("Train " + trainNum + " going to next station: " + boardStation.getStationNum());
+			}
 		}
 	}
 

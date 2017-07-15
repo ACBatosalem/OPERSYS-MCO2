@@ -1,34 +1,34 @@
 import java.util.*;
-
+import java.lang.*;
 
 public class CalTrainDriver {
 	public static void main(String[] args) {
 		CalTrain ctrain = new CalTrain();
-		Station firstStation = new Station();
+		ArrayList<Station> allStations = new ArrayList<Station>();
 
-	//	ctrain.station_load_train(firstStation, 0);
-	//	ctrain.station_load_train(firstStation, 10);
+		/* Station init */
+		for(int i=0;i<8;i++) {
+			allStations.add(new Station(i));
+			if (i >= 1 && i < 7)
+				allStations.get(i-1).setNextStation(allStations.get(i));
+		}
 
-		int tot_passengers = 10;
+		/* Passenger init */
+		int tot_passengers = 20;
 		int passengers_left = tot_passengers;
 		for(int i=0;i<tot_passengers;i++) {
-			Passenger robot = new Passenger(firstStation, ctrain, i);
+			Passenger robot = new Passenger(allStations.get((int)Math.floor(Math.random() * 8)), ctrain, i);
 			threads_completed++;
 		}
 
-		//Passenger robot = new Passenger(firstStation, ctrain, 2);
-		//threads_completed++;
-
-	//	ctrain.station_load_train(firstStation, 0);
-
 		int tot_passengers_boarded = 0;
-		int max_free_seats = 50;
+		int max_free_seats = 10;
 		int pass = 0;
 		while (passengers_left > 0) {
 			int free_seats = 5;
 			System.out.println("Train entering station with " + free_seats + " free seats");
 			load_train_returned = false;
-			Train train = new Train(firstStation, ctrain, free_seats, pass);
+			Train train = new Train(allStations.get(0), ctrain, free_seats, pass);
 			load_train_returned = true;
 
 			int threads_to_reap = Math.min(passengers_left, free_seats);
@@ -36,10 +36,8 @@ public class CalTrainDriver {
 			int threads_reaped = 0;
 			while (threads_reaped < threads_to_reap) {
 				if (threads_completed > 0) {
-					
 					threads_reaped++;
-					
-					ctrain.station_on_board(firstStation, threads_reaped == threads_to_reap);
+					ctrain.station_on_board(train.getBoardStation(), threads_reaped == threads_to_reap);
 					threads_completed--;
 				}
 			}

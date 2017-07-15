@@ -5,7 +5,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class Station {
 	/* Constructors */
-	public Station() {
+	public Station(int num) {
 		train_arrived = new ReentrantLock().newCondition();
 		all_pass_seated = new ReentrantLock().newCondition();
 		lock = new ReentrantLock();
@@ -15,6 +15,8 @@ public class Station {
 		train_num_seats = 0;
 		train_stand_pass = 0;
 		train_num = -1;
+		stationNum = num;
+		nextStation = null;
 	}
 
 	/* Getters and Setters */
@@ -46,12 +48,24 @@ public class Station {
 		return train_stand_pass;
 	}
 
+	public Station getNextStation() {
+		return nextStation;
+	}
+
+	public int getStationNum() {
+		return stationNum;
+	}
+
 	public void setEmptySeats(int seats) {
 		train_empty_seats = seats;
 	}
 
 	public void setNumSeats(int seats) {
 		train_num_seats = seats;
+	}
+
+	public void setNextStation(Station next) {
+		nextStation = next;
 	}
 
 	/* Other Functions */
@@ -107,5 +121,7 @@ public class Station {
 	private int train_empty_seats;
 	private int train_num_seats;
 	private int train_stand_pass;
+	private int stationNum;
+	private Station nextStation;
 	public int train_num;
 }

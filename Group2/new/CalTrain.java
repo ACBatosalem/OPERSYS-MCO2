@@ -3,7 +3,7 @@ import java.util.*;
 public class CalTrain {
 	public Station station_init() {
 		System.out.println("Init");
-		return new Station();
+		return new Station(2);
 	}
 
 	public void station_load_train(Station station, int count, int trainNum) {
@@ -12,7 +12,7 @@ public class CalTrain {
 			station.setEmptySeats(count);
 			station.setNumSeats(count);
 			station.getLock().unlock();
-			System.out.println("Train arrives (Count: " + count + ") Train Num->"+station.train_num);
+			System.out.println("Train " + trainNum + " arrives (Count: " + count + ")");
 			station.signalTrain();
 			while(station.getWaitingPass() > 0 && station.getEmptySeats() > 0) {
 				
@@ -25,12 +25,12 @@ public class CalTrain {
 				catch(Exception e) {}
 			}
 
-			System.out.println("wait finished: "+"Waiting"+ station.getWaitingPass() + " "+ station.getEmptySeats());
+			System.out.println("wait finished: Waiting - "+ station.getWaitingPass() + " Empty - "+ station.getEmptySeats());
 
 			station.getLock().lock();
 			station.setEmptySeats(0);
 			station.setNumSeats(0);
-			System.out.println("Train left");
+			System.out.println("Train " + trainNum + " left");
 			station.train_num = -1;
 			station.getLock().unlock();
 		}
@@ -41,12 +41,9 @@ public class CalTrain {
 		if(!alreadyWaited) {
 			station.getLock().lock();
 			station.incWaitPass();
-			System.out.println("Passenger arrived ->" + test);
+			System.out.println("Passenger " + test + " arrived in station " + station.getStationNum());
 			station.getLock().unlock();
 		}
-		
-	//	System.out.println("Standing: "+station.getStandingPass() +" Empty: " + station.getEmptySeats()
-	//		+" NumSeats: " + station.getNumSeats());
 		while(station.getStandingPass() == station.getEmptySeats()) {
 			try {
 				
@@ -57,11 +54,9 @@ public class CalTrain {
 		}
 
 		station.getLock().lock();
-	//	System.out.println("Standing: "+ station.getStandingPass());
-	//	System.out.println("Num Seats: "+ station.getNumSeats());
 		if(station.getStandingPass() + 1 < station.getNumSeats()){
 			station.incStandPass();
-			System.out.println("Passenger boarding ->"+ test + " Train num: "+station.train_num);
+			System.out.println("Passenger " + test + " boarding -> Train num: " + station.train_num);
 			alreadyBoarded = true;
 		}
 		station.getLock().unlock();
