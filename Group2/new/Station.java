@@ -143,7 +143,7 @@ public class Station {
 			waitLeftPassengers.add(newPass);
 	}
 
-	public void decWaitPass(Passenger pass, boolean direction) {
+	public void decWaitPass(Passenger pass, boolean direction, int statNum) {
 		if (direction) {
 			for(Passenger p : waitRightPassengers) {
 				if (p.getPassNum() == pass.getPassNum()) {

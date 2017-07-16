@@ -38,7 +38,8 @@ public class CalTrainDriver {
 		int totalPassengersBoarded = 0;
 		int maxFreeSeats = 5;
 		int trainCtr = 0;
-		while(passengersLeft > 0 && trainCtr < 6) {
+		while((passengersLeft > 0 && trainCtr < 6)) 
+		{
 			if(totalNumSeats < totalPassengers) {
 				int freeSeats = (int)(Math.floor(Math.random() * maxFreeSeats)) + 1;
 				totalNumSeats += freeSeats;
@@ -78,15 +79,20 @@ public class CalTrainDriver {
 				/* Passengers board train */
 				while(threadsReaped < threadsToReap) {
 					if(threadsCompleted > 0) {
-						threadsReaped++;
 						if ((tempDirection && tempStatNum >= 0 && tempStatNum <= 6) ||
 							(!tempDirection && tempStatNum >= 1 && tempStatNum <= 7))
+						{
 							ctrain.station_on_board(allTrains.get(j).getBoardStation(), threadsReaped == threadsToReap,
 													allTrains.get(j).getBoardStation().getWaitPassengers(tempDirection).get(0));
+							threadsReaped++;
+						}
 						else if ((tempDirection && tempStatNum == 7) ||
 								 (!tempDirection && tempStatNum == 0))
+						{
 							ctrain.station_on_board(allTrains.get(j).getBoardStation(), threadsReaped == threadsToReap,
 													allTrains.get(j).getBoardStation().getWaitPassengers(!tempDirection).get(0));
+							threadsReaped++;
+						}
 						
 						//try{allTrains.get(j).trainThread.sleep(500);} catch(Exception e){}
 					}
@@ -116,4 +122,5 @@ public class CalTrainDriver {
 	public static boolean loadTrainReturned = false;
 	public static int threadsCompleted = 0;
 	public static int totalNumSeats = 0;
+	public static int totalPassServed = 0;
 }

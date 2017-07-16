@@ -12,6 +12,7 @@ public class CalTrain {
 			/* Train arrives at specific station */
 			station.getLock().lock();
 			int trainExiters = station_off_board(station, curr);
+			CalTrainDriver.totalPassServed += trainExiters;
 			station.setEmptySeats(direction, curr.getFreeSeats());
 			station.setTotalSeats(direction, curr.getNumSeats());
 			station.getLock().unlock();
@@ -53,6 +54,7 @@ public class CalTrain {
 			/* Train arrives at specific station */
 			station.getLock().lock();
 			int trainExiters = station_off_board(station, curr);
+			CalTrainDriver.totalPassServed += trainExiters;
 			station.setEmptySeats(direction, curr.getFreeSeats());
 			station.setTotalSeats(direction, curr.getNumSeats());
 			station.getLock().unlock();
@@ -140,7 +142,7 @@ public class CalTrain {
 
 	public void station_on_board(Station station, boolean all, Passenger pass) {
 		station.getLock().lock();
-		station.decWaitPass(pass, pass.getDirection());
+		station.decWaitPass(pass, pass.getDirection(), station.getStationNum());
 		station.decStandPass(pass.getDirection());
 		station.decEmptySeats(pass.getDirection());
 		station.getLock().unlock();
@@ -180,7 +182,7 @@ public class CalTrain {
 			if (station.getLeftEmptySeats() == 0 || station.getRightTrainPass() == 0 || all)
 				station.signalPassSeated();
 		}
-		try {Thread.sleep(1000);} catch(Exception e) {}
+		//try {Thread.sleep(1000);} catch(Exception e) {}
 	}
 
 	public int station_off_board(Station station, Train t) {
