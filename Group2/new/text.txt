@@ -1,0 +1,272 @@
+Initializing Station 0
+Initializing Station 1
+Initializing Station 2
+Initializing Station 3
+Initializing Station 4
+Initializing Station 5
+Initializing Station 6
+Initializing Station 7
+
+Passenger 0 arrives at Station 6 (Leaves = Station 7 Direction = true )
+Passenger 1 arrives at Station 5 (Leaves = Station 7 Direction = true )
+Passenger 2 arrives at Station 2 (Leaves = Station 3 Direction = true )
+Passenger 3 arrives at Station 7 (Leaves = Station 0 Direction = false )
+Passenger 4 arrives at Station 2 (Leaves = Station 7 Direction = true )
+Passenger 5 arrives at Station 1 (Leaves = Station 3 Direction = true )
+Passenger 6 arrives at Station 6 (Leaves = Station 4 Direction = false )
+Passenger 7 arrives at Station 2 (Leaves = Station 4 Direction = true )
+Passenger 8 arrives at Station 5 (Leaves = Station 3 Direction = false )
+Passenger 9 arrives at Station 3 (Leaves = Station 2 Direction = false )
+
+---------------------
+
+Train 0 entering Station 0 with 2 free seats
+Train 0 arrives in Station 0. Train's number of available seats = 2
+Station 0 Waiting Passengers - 0 Empty Seats - 2
+Train 0 leaves Station 0
+Train 0 going to next station: 1
+Passengers left: 10
+Passengers boarded: 0
+
+-------------------------------
+
+Train 1 entering Station 0 with 3 free seats
+Train 1 arrives in Station 0. Train's number of available seats = 3
+Station 0 Waiting Passengers - 0 Empty Seats - 3
+Train 1 leaves Station 0
+Train 1 going to next station: 1
+Train 0 arrives in Station 1. Train's number of available seats = 2
+Station 1 Waiting Passengers - 0 Empty Seats - 2
+Train 0 leaves Station 1
+Train 0 going to next station: 2
+Train 1 arrives in Station 1. Train's number of available seats = 3
+Station 1 Waiting Passengers - 0 Empty Seats - 3
+Train 1 leaves Station 1
+Train 1 going to next station: 2
+Passenger 2 is on board at Train 0
+Train 0 arrives in Station 2. Train's number of available seats = 1
+Passenger 4 is on board at Train 0
+Passenger 7 is on board at Train 0
+Station 2 Waiting Passengers - 0 Empty Seats - 0
+Train 0 leaves Station 2
+Train 0 going to next station: 3
+Train 1 arrives in Station 2. Train's number of available seats = 3
+Station 2 Waiting Passengers - 0 Empty Seats - 3
+Train 1 leaves Station 2
+Train 1 going to next station: 3
+Passenger 2 leaves Train 0 at Station 3
+Passengers left: 6
+Passengers boarded: 4
+
+-------------------------------
+
+Train 0 arrives in Station 3. Train's number of available seats = 0
+Station 3 Waiting Passengers - 0 Empty Seats - 0
+Train 0 leaves Station 3
+Train 0 going to next station: 4
+Train 2 entering Station 0 with 2 free seats
+Train 2 arrives in Station 0. Train's number of available seats = 2
+Station 0 Waiting Passengers - 0 Empty Seats - 2
+Train 2 leaves Station 0
+Train 2 going to next station: 1
+Train 1 arrives in Station 3. Train's number of available seats = 3
+Station 3 Waiting Passengers - 0 Empty Seats - 3
+Train 1 leaves Station 3
+Passenger 7 leaves Train 0 at Station 4
+Train 1 going to next station: 4
+Train 2 arrives in Station 1. Train's number of available seats = 2
+Station 1 Waiting Passengers - 0 Empty Seats - 2
+Train 2 leaves Station 1
+Train 2 going to next station: 2
+Train 0 arrives in Station 4. Train's number of available seats = 1
+Station 4 Waiting Passengers - 0 Empty Seats - 1
+Train 0 leaves Station 4
+Train 0 going to next station: 5
+Passengers left: 6
+Passengers boarded: 4
+
+-------------------------------
+
+Train 3 entering Station 0 with 3 free seats
+Train 3 arrives in Station 0. Train's number of available seats = 3
+Station 0 Waiting Passengers - 0 Empty Seats - 3
+Train 3 leaves Station 0
+Train 3 going to next station: 1
+Train 1 arrives in Station 4. Train's number of available seats = 3
+Station 4 Waiting Passengers - 0 Empty Seats - 3
+Train 1 leaves Station 4
+Train 1 going to next station: 5
+Train 2 arrives in Station 2. Train's number of available seats = 2
+Station 2 Waiting Passengers - 0 Empty Seats - 2
+Train 2 leaves Station 2
+Train 2 going to next station: 3
+Train 3 arrives in Station 1. Train's number of available seats = 3
+Station 1 Waiting Passengers - 0 Empty Seats - 3
+Train 3 leaves Station 1
+Train 3 going to next station: 2
+Train 0 arrives in Station 5. Train's number of available seats = 1
+Station 5 Waiting Passengers - 0 Empty Seats - 1
+Train 0 leaves Station 5
+Train 0 going to next station: 6
+Train 2 arrives in Station 3. Train's number of available seats = 2
+Station 3 Waiting Passengers - 0 Empty Seats - 2
+Train 2 leaves Station 3
+Train 2 going to next station: 4
+Train 3 arrives in Station 2. Train's number of available seats = 3
+Station 2 Waiting Passengers - 0 Empty Seats - 3
+Train 3 leaves Station 2
+Train 3 going to next station: 3
+Train 1 arrives in Station 5. Train's number of available seats = 3
+Station 5 Waiting Passengers - 0 Empty Seats - 3
+Train 1 leaves Station 5
+Train 1 going to next station: 6
+Train 2 arrives in Station 4. Train's number of available seats = 2
+Station 4 Waiting Passengers - 0 Empty Seats - 2
+Train 2 leaves Station 4
+Train 2 going to next station: 5
+Train 0 arrives in Station 6. Train's number of available seats = 1
+Train 3 arrives in Station 3. Train's number of available seats = 3
+Station 3 Waiting Passengers - 0 Empty Seats - 3
+Train 3 leaves Station 3
+Train 3 going to next station: 4
+Passengers left: 5
+Passengers boarded: 5
+
+-------------------------------
+
+Station 6 Waiting Passengers - 0 Empty Seats - 0
+Passenger 0 is on board at Train 0
+Train 0 leaves Station 6
+Train 0 going to next station: 7
+Train 1 arrives in Station 6. Train's number of available seats = 3
+Station 6 Waiting Passengers - 0 Empty Seats - 3
+Train 1 leaves Station 6
+Train 1 going to next station: 7
+Train 2 arrives in Station 5. Train's number of available seats = 2
+Station 5 Waiting Passengers - 0 Empty Seats - 2
+Train 2 leaves Station 5
+Train 2 going to next station: 6
+Train 3 arrives in Station 4. Train's number of available seats = 3
+Station 4 Waiting Passengers - 0 Empty Seats - 3
+Train 3 leaves Station 4
+Train 3 going to next station: 5
+Passenger 4 leaves Train 0 at Station 7
+Passenger 0 leaves Train 0 at Station 7
+Train 2 arrives in Station 6. Train's number of available seats = 2
+Station 6 Waiting Passengers - 0 Empty Seats - 2
+Train 2 leaves Station 6
+Train 2 going to next station: 7
+Train 0 arrives in Station 7. Train's number of available seats = 2
+Passenger 3 is on board at Train 0
+LeftWaitPass = 0 RightEmptySeats = 2
+Station 7 Waiting Passengers - 0 Empty Seats - 2
+Train 0 leaves Station 7
+Train 0 going to next station: 6
+Train 3 arrives in Station 5. Train's number of available seats = 3
+Station 5 Waiting Passengers - 0 Empty Seats - 3
+Train 3 leaves Station 5
+Train 3 going to next station: 6
+Train 1 arrives in Station 7. Train's number of available seats = 3
+LeftWaitPass = 0 RightEmptySeats = 3
+Station 7 Waiting Passengers - 0 Empty Seats - 3
+Train 1 leaves Station 7
+Train 1 going to next station: 6
+Train 2 arrives in Station 7. Train's number of available seats = 2
+LeftWaitPass = 0 RightEmptySeats = 2
+Station 7 Waiting Passengers - 0 Empty Seats - 2
+Train 2 leaves Station 7
+Train 2 going to next station: 6
+Passenger 6 is on board at Train 0
+Train 3 arrives in Station 6. Train's number of available seats = 3
+Station 6 Waiting Passengers - 0 Empty Seats - 3
+Station 6 Waiting Passengers - 0 Empty Seats - 0
+Train 3 leaves Station 6
+Train 3 going to next station: 7
+Train 0 leaves Station 6
+Train 0 going to next station: 5
+Station 6 Waiting Passengers - 0 Empty Seats - 3
+Train 1 leaves Station 6
+Train 1 going to next station: 5
+Station 6 Waiting Passengers - 0 Empty Seats - 2
+Train 2 leaves Station 6
+Train 2 going to next station: 5
+Train 3 arrives in Station 7. Train's number of available seats = 3
+LeftWaitPass = 0 RightEmptySeats = 3
+Station 7 Waiting Passengers - 0 Empty Seats - 3
+Train 3 leaves Station 7
+Train 3 going to next station: 6
+Station 5 Waiting Passengers - 1 Empty Seats - 0
+Train 0 leaves Station 5
+Train 0 going to next station: 4
+Passengers left: 2
+Passengers boarded: 8
+
+-------------------------------
+
+Station 6 Waiting Passengers - 0 Empty Seats - 3
+Train 3 leaves Station 6
+Train 3 going to next station: 5
+Passenger 8 is on board at Train 1
+Passenger 6 leaves Train 0 at Station 4
+Station 5 Waiting Passengers - 0 Empty Seats - 2
+Train 1 leaves Station 5
+Train 1 going to next station: 4
+Station 5 Waiting Passengers - 0 Empty Seats - 3
+Train 3 leaves Station 5
+Train 3 going to next station: 4
+Station 4 Waiting Passengers - 0 Empty Seats - 1
+Train 0 leaves Station 4
+Train 0 going to next station: 3
+Station 5 Waiting Passengers - 0 Empty Seats - 2
+Train 2 leaves Station 5
+Train 2 going to next station: 4
+Station 4 Waiting Passengers - 0 Empty Seats - 2
+Train 1 leaves Station 4
+Train 1 going to next station: 3
+Station 4 Waiting Passengers - 0 Empty Seats - 2
+Train 2 leaves Station 4
+Train 2 going to next station: 3
+Station 4 Waiting Passengers - 0 Empty Seats - 3
+Train 3 leaves Station 4
+Train 3 going to next station: 3
+Passengers left: 1
+Passengers boarded: 9
+
+-------------------------------
+
+Passenger 9 is on board at Train 0
+Station 3 Waiting Passengers - 0 Empty Seats - 0
+Train 0 leaves Station 3
+Train 0 going to next station: 2
+Station 3 Waiting Passengers - 0 Empty Seats - 2
+Train 2 leaves Station 3
+Train 2 going to next station: 2
+Station 3 Waiting Passengers - 0 Empty Seats - 3
+Passenger 8 leaves Train 1 at Station 3
+Passenger 9 leaves Train 0 at Station 2
+Station 3 Waiting Passengers - 0 Empty Seats - 3
+Train 3 leaves Station 3
+Train 3 going to next station: 2
+Train 1 leaves Station 3
+Train 1 going to next station: 2
+Station 2 Waiting Passengers - 0 Empty Seats - 1
+Train 0 leaves Station 2
+Train 0 going to next station: 1
+Station 2 Waiting Passengers - 0 Empty Seats - 2
+Train 2 leaves Station 2
+Train 2 going to next station: 1
+Station 2 Waiting Passengers - 0 Empty Seats - 3
+Station 2 Waiting Passengers - 0 Empty Seats - 3
+Train 3 leaves Station 2
+Train 3 going to next station: 1
+Train 1 leaves Station 2
+Train 1 going to next station: 1
+Station 1 Waiting Passengers - 0 Empty Seats - 1
+Train 0 leaves Station 1
+Train 0 going to next station: 0
+Passengers left: 0
+Passengers boarded: 10
+
+-------------------------------
+
+All Passengers served!

@@ -69,10 +69,11 @@ public class Train implements Runnable {
 				boardStation.setLeftTrain(this);
 				boardStation.getLock().unlock();
 				sync.station_load_train(boardStation, this, toTheRight);
-				if (boardStation.getRightStation() == null)
-					toTheRight = false;
-				else if (boardStation.getLeftStation() == null)
+
+				if (boardStation.getLeftStation() == null)
 					toTheRight = true;
+				else if (boardStation.getRightStation() == null)
+					toTheRight = false;		
 				boardStation = boardStation.getNextStation(toTheRight);
 
 				System.out.println("Train " + trainNum + " going to next station: " 

@@ -57,18 +57,37 @@ public class CalTrainDriver {
 				//System.out.println("Before Served");
 				//int served = ctrain.station_off_board(allTrains.get(j).getBoardStation(), allTrains.get(j));
 				//System.out.println("After Served");
-
-				int threadsToReap = Math.min(allTrains.get(j).getBoardStation().getWaitingPass(allTrains.get(j).getDirection()), allTrains.get(j).getFreeSeats());
-				System.out.println("Expected Free Seats: " + allTrains.get(j).getFreeSeats() + 
-								   ", Expected Passengers Left: " + allTrains.get(j).getBoardStation().getWaitingPass(allTrains.get(j).getDirection()));
+				int tempStatNum = allTrains.get(j).getBoardStation().getStationNum();
+				boolean tempDirection = allTrains.get(j).getDirection();
+				int threadsToReap = -1;
 				int threadsReaped = 0;
+
+				if ((tempDirection && tempStatNum >= 0 && tempStatNum <= 6) ||
+					(!tempDirection && tempStatNum >= 1 && tempStatNum <= 7))
+					threadsToReap = Math.min(allTrains.get(j).getBoardStation().getWaitingPass(tempDirection), 
+											 allTrains.get(j).getFreeSeats());
+
+				else if ((tempDirection && tempStatNum == 7) ||
+						 (!tempDirection && tempStatNum == 0))
+					threadsToReap = Math.min(allTrains.get(j).getBoardStation().getWaitingPass(!tempDirection),
+											 allTrains.get(j).getFreeSeats());
+
+				//System.out.println("Expected Free Seats: " + allTrains.get(j).getFreeSeats() + 
+								   //", Expected Passengers Left: " + allTrains.get(j).getBoardStation().getWaitingPass(allTrains.get(j).getDirection()));
 
 				/* Passengers board train */
 				while(threadsReaped < threadsToReap) {
 					if(threadsCompleted > 0) {
 						threadsReaped++;
-						ctrain.station_on_board(allTrains.get(j).getBoardStation(), threadsReaped == threadsToReap,
-												allTrains.get(j).getBoardStation().getWaitPassengers(allTrains.get(j).getDirection()).get(0));
+						if ((tempDirection && tempStatNum >= 0 && tempStatNum <= 6) ||
+							(!tempDirection && tempStatNum >= 1 && tempStatNum <= 7))
+							ctrain.station_on_board(allTrains.get(j).getBoardStation(), threadsReaped == threadsToReap,
+													allTrains.get(j).getBoardStation().getWaitPassengers(tempDirection).get(0));
+						else if ((tempDirection && tempStatNum == 7) ||
+								 (!tempDirection && tempStatNum == 0))
+							ctrain.station_on_board(allTrains.get(j).getBoardStation(), threadsReaped == threadsToReap,
+													allTrains.get(j).getBoardStation().getWaitPassengers(!tempDirection).get(0));
+						
 						//try{allTrains.get(j).trainThread.sleep(500);} catch(Exception e){}
 					}
 				}

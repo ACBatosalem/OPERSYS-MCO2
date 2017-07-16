@@ -15,19 +15,19 @@ public class CalTrain {
 			station.setEmptySeats(direction, curr.getFreeSeats());
 			station.setTotalSeats(direction, curr.getNumSeats());
 			station.getLock().unlock();
-			System.out.println("Train " + curr.getTrainNum() + " arrives in Station " + 
-							   station.getStationNum() + ". Train's number of available seats = " + curr.getFreeSeats());
-			
+			System.out.println("Train " + curr.getTrainNum() + " arrives in Station " + station.getStationNum() 
+							   + ". Train's number of available seats = " + curr.getFreeSeats());
+
 			if (station.getStationNum() == 7) {
-				while(station.getLeftWaitPass() > 0 && station.getLeftEmptySeats() > 0) {
+				while(station.getLeftWaitPass() > 0 && station.getRightEmptySeats() > 0) {
 					try {
-						station.signalTrain(); 
+						station.signalTrain();
 						station.waitPassSeated();
 					} catch(Exception e) {}
 				}
 				System.out.println("Station " + station.getStationNum() + " Waiting Passengers - " 
 								   + station.getLeftWaitPass() + " Empty Seats - " 
-								   + station.getRightEmptySeats());				
+								   + station.getRightEmptySeats());
 			}
 			else {
 				while(station.getRightWaitPass() > 0 && station.getRightEmptySeats() > 0) {
@@ -40,23 +40,6 @@ public class CalTrain {
 								   + station.getRightWaitPass() + " Empty Seats - " 
 								   + station.getRightEmptySeats());
 			}
-
-			/* Passengers Leave and Board Train */
-			/*int threadsToReap = Math.min(station.getWaitingPass(direction), curr.getFreeSeats());
-			int threadsReaped = 0;
-			System.out.println("Expected Free Seats: " + curr.getFreeSeats() +
-							   " Expected Passengers Left: " + station.getWaitingPass(direction));
-
-			while(threadsReaped < threadsToReap) {
-				if (threadsCompleted > 0) {
-					threadsReaped++;
-					station_on_board(station, threadsReaped == threadsToReap, station.getWaitPassengers(direction).get(0));
-					try { curr.trainThread.sleep(500); } catch(Exception e) {}
-				}
-			}
-
-			passengersLeft -= threadsReaped;
-			passengersBoarded += threadsReaped;*/
 
 			/* Train leaves specific station */
 			station.getLock().lock();
@@ -75,7 +58,7 @@ public class CalTrain {
 			station.getLock().unlock();
 
 			if (station.getStationNum() == 0) {
-				while(station.getRightWaitPass() > 0 && station.getRightEmptySeats() > 0) {
+				while(station.getRightWaitPass() > 0 && station.getLeftEmptySeats() > 0) {
 					try {
 						station.signalTrain(); 
 						station.waitPassSeated();
@@ -96,23 +79,6 @@ public class CalTrain {
 								   + station.getLeftWaitPass() + " Empty Seats - " 
 								   + station.getLeftEmptySeats());
 			}
-
-			/* Passengers Leave and Board Train */
-			/*int threadsToReap = Math.min(station.getWaitingPass(direction), curr.getFreeSeats());
-			int threadsReaped = 0;
-			System.out.println("Expected Free Seats: " + curr.getFreeSeats() +
-							   " Expected Passengers Left: " + station.getWaitingPass(direction));
-
-			while(threadsReaped < threadsToReap) {
-				if (threadsCompleted > 0) {
-					threadsReaped++;
-					station_on_board(station, threadsReaped == threadsToReap, station.getWaitPassengers(direction).get(0));
-					try { curr.trainThread.sleep(500); } catch(Exception e) {}
-				}
-			}
-
-			passengersLeft -= threadsReaped;
-			passengersBoarded += threadsReaped;*/
 
 			/* Train leaves specific station */
 			station.getLock().lock();
@@ -178,33 +144,41 @@ public class CalTrain {
 		station.decStandPass(pass.getDirection());
 		station.decEmptySeats(pass.getDirection());
 		station.getLock().unlock();
-		if (pass.getDirection() && station.getRightTrain() != null) {
+
+		//System.out.println("Pass " + pass.getPassNum() + " Direction = " + pass.getDirection() +
+						 //  " Train = " + station.getRightTrain());
+
+		if (pass.getDirection() && station.getRightTrain() != null)	// GENERAL: Train is to the right
+		{
 			station.getRightTrain().addRiding(pass);
 			System.out.println("Passenger " + pass.getPassNum() + " is on board at Train " + 
 						       station.getRightTrain().getTrainNum());
 			if (station.getRightEmptySeats() == 0 || station.getRightTrainPass() == 0 || all)
 				station.signalPassSeated();
 		}
-		else if (!pass.getDirection() && station.getLeftTrain() != null) {
+		else if (!pass.getDirection() && station.getRightTrain() != null) // If Passenger boards on Station 7
+		{
+			station.getRightTrain().addRiding(pass);
+			System.out.println("Passenger " + pass.getPassNum() + " is on board at Train " + 
+						       station.getRightTrain().getTrainNum());
+			if (station.getRightEmptySeats() == 0 || station.getLeftTrainPass() == 0 || all)
+				station.signalPassSeated();
+		}
+		else if (!pass.getDirection() && station.getLeftTrain() != null) // GENERAL: Train is to the left
+		{
 			station.getLeftTrain().addRiding(pass);
 			System.out.println("Passenger " + pass.getPassNum() + " is on board at Train " + 
 						       station.getLeftTrain().getTrainNum());
 			if (station.getLeftEmptySeats() == 0 || station.getLeftTrainPass() == 0 || all)
 				station.signalPassSeated();
 		}
-		else if (!pass.getDirection() && station.getRightTrain() != null) {
-			station.getRightTrain().addRiding(pass);
-			System.out.println("Passenger " + pass.getPassNum() + " is on board at Train " + 
-						       station.getRightTrain().getTrainNum());
-			if (station.getRightEmptySeats() == 0 || station.getRightTrainPass() == 0 || all)
-				station.signalPassSeated();			
-		}
-		else if (pass.getDirection() && station.getLeftTrain() != null) {
+		else if (pass.getDirection() && station.getLeftTrain() != null)	// If Passenger boards on Station 0
+		{
 			station.getLeftTrain().addRiding(pass);
 			System.out.println("Passenger " + pass.getPassNum() + " is on board at Train " + 
 						       station.getLeftTrain().getTrainNum());
-			if (station.getLeftEmptySeats() == 0 || station.getLeftTrainPass() == 0 || all)
-				station.signalPassSeated();			
+			if (station.getLeftEmptySeats() == 0 || station.getRightTrainPass() == 0 || all)
+				station.signalPassSeated();
 		}
 		try {Thread.sleep(1000);} catch(Exception e) {}
 	}
