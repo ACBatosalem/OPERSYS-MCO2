@@ -30,7 +30,7 @@ public class CalTrainDriver {
 			int inStatNum = (int)Math.floor(Math.random()*8);
 			Passenger robot = new Passenger(allStations.get(inStatNum), ctrain, i, allStations.get(CalTrainDriver.outStat(inStatNum)));
 			threadsCompleted++;
-			try {Thread.sleep(1200);} catch(Exception e){}
+			try {Thread.sleep(500);} catch(Exception e){}
 		}
 
 		/* Actual Program */
@@ -39,15 +39,18 @@ public class CalTrainDriver {
 		int maxFreeSeats = 5;
 		int trainCtr = 0;
 		while(passengersServed > 0 && trainCtr < 6) {
-			int freeSeats = (int)(Math.floor(Math.random() * maxFreeSeats)) + 1;
 
-			/* Train is entering first station */
-			loadTrainReturned = false;
-			Train newTrain = new Train(allStations.get(0), ctrain, freeSeats, trainCtr);
-			loadTrainReturned = true;
-			System.out.println("Train " + newTrain.getTrainNum() + " entering Station 0 with "
-							   + freeSeats + " free seats");
-			allTrains.add(newTrain);
+			if(totalNumSeats < totalPassengers){
+				int freeSeats = (int)(Math.floor(Math.random() * maxFreeSeats)) + 1;
+				totalNumSeats += freeSeats;
+				/* Train is entering first station */
+				loadTrainReturned = false;
+				Train newTrain = new Train(allStations.get(0), ctrain, freeSeats, trainCtr);
+				loadTrainReturned = true;
+				System.out.println("Train " + newTrain.getTrainNum() + " entering Station 0 with "
+								   + freeSeats + " free seats");
+				allTrains.add(newTrain);
+			}
 
 			for(int j=0;j<allTrains.size();j++) {
 				/* Passengers leave train */
@@ -90,4 +93,5 @@ public class CalTrainDriver {
 
 	public static boolean loadTrainReturned = false;
 	public static int threadsCompleted = 0;
+	public static int totalNumSeats = 0;
 }
