@@ -28,10 +28,8 @@ public class Passenger implements Runnable {
 	}
 
 	public boolean determineDirection() {
-		if (boardStation.getStationNum() < leaveStation.getStationNum()) // to the right
+		if (boardStation.getStationNum() <= leaveStation.getStationNum()) // to the right
 			return true;
-		else if (boardStation.getStationNum() > leaveStation.getStationNum())
-			return false;
 		return false;
 	}
 

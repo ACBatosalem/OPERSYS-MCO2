@@ -50,29 +50,35 @@ public class Train implements Runnable {
 	public void run() {
 		while(true) {
 			if(toTheRight && boardStation.getRightTrain() == null) {
+				boardStation.getLock().lock();
 				boardStation.setRightTrain(this);
-				sync.station_load_train(boardStation, this, toTheRight);
+				boardStation.getLock().unlock();
+				sync.station_load_train(boardStation, this, toTheRight); 
+
 				if (boardStation.getRightStation() == null)
 					toTheRight = false;
 				else if (boardStation.getLeftStation() == null)
 					toTheRight = true;
 				boardStation = boardStation.getNextStation(toTheRight);
+				
 				System.out.println("Train " + trainNum + " going to next station: " 
 							       + boardStation.getStationNum());
-				try {Thread.sleep(1500);} catch(Exception e) {}
 			}
 			else if(!toTheRight && boardStation.getLeftTrain() == null) {
+				boardStation.getLock().lock();
 				boardStation.setLeftTrain(this);
+				boardStation.getLock().unlock();
 				sync.station_load_train(boardStation, this, toTheRight);
 				if (boardStation.getRightStation() == null)
 					toTheRight = false;
 				else if (boardStation.getLeftStation() == null)
 					toTheRight = true;
 				boardStation = boardStation.getNextStation(toTheRight);
+
 				System.out.println("Train " + trainNum + " going to next station: " 
 							       + boardStation.getStationNum());
-				try {Thread.sleep(1500);} catch(Exception e) {}
 			}
+			try{Thread.sleep(1000);} catch(Exception e) {}
 		}
 	}
 

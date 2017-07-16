@@ -1,4 +1,5 @@
 import java.util.*;
+import java.lang.*;
 
 public class CalTrain {
 	public Station station_init(int num) {
@@ -8,7 +9,9 @@ public class CalTrain {
 
 	public void station_load_train(Station station, Train curr, boolean direction) {
 		if (direction && curr.getTrainNum() == station.getRightTrain().getTrainNum()) {
+			/* Train arrives at specific station */
 			station.getLock().lock();
+			int trainExiters = station_off_board(station, curr);
 			station.setEmptySeats(direction, curr.getFreeSeats());
 			station.setTotalSeats(direction, curr.getNumSeats());
 			station.getLock().unlock();
@@ -18,24 +21,40 @@ public class CalTrain {
 				try {
 					station.signalTrain(); 
 					station.waitPassSeated();
-					try {Thread.sleep(1000);} catch(Exception e) {} 
+				} catch(Exception e) {}
+			}
+			System.out.println("Station " + station.getStationNum() + " Waiting Passengers - " + station.getRightWaitPass() + 
+							   " Empty Seats - "+ station.getRightEmptySeats());
+
+			/* Passengers Leave and Board Train */
+			/*int threadsToReap = Math.min(station.getWaitingPass(direction), curr.getFreeSeats());
+			int threadsReaped = 0;
+			System.out.println("Expected Free Seats: " + curr.getFreeSeats() +
+							   " Expected Passengers Left: " + station.getWaitingPass(direction));
+
+			while(threadsReaped < threadsToReap) {
+				if (threadsCompleted > 0) {
+					threadsReaped++;
+					station_on_board(station, threadsReaped == threadsToReap, station.getWaitPassengers(direction).get(0));
+					try { curr.trainThread.sleep(500); } catch(Exception e) {}
 				}
-				catch(Exception e) {}
 			}
 
-			System.out.println("Station " + station.getStationNum() + " Waiting Passengers - " + station.getRightWaitPass() + 
-							   "\nEmpty Seats - "+ station.getRightEmptySeats());
+			passengersLeft -= threadsReaped;
+			passengersBoarded += threadsReaped;*/
 
+			/* Train leaves specific station */
 			station.getLock().lock();
 			station.setEmptySeats(direction, 0);
 			station.setTotalSeats(direction, 0);
 			System.out.println("Train " + curr.getTrainNum() + " leaves Station " + station.getStationNum());
 			station.setRightTrain(null);
 			station.getLock().unlock();
-			try {Thread.sleep(1000);} catch(Exception e) {}
 		}
 		else if (!direction && curr.getTrainNum() == station.getLeftTrain().getTrainNum()) {
+			/* Train arrives at specific station */
 			station.getLock().lock();
+			int trainExiters = station_off_board(station, curr);
 			station.setEmptySeats(direction, curr.getFreeSeats());
 			station.setTotalSeats(direction, curr.getNumSeats());
 			station.getLock().unlock();
@@ -43,25 +62,39 @@ public class CalTrain {
 							   station.getStationNum() + ". Train's number of available seats = " + curr.getFreeSeats());
 			while(station.getLeftWaitPass() > 0 && station.getLeftEmptySeats() > 0) {
 				try {
-					station.signalTrain(); 
-					station.waitPassSeated();
-					try {Thread.sleep(1000);} catch(Exception e) {} 
-				}
-				catch(Exception e) {}
+					station.signalTrain();
+					station.waitPassSeated(); 
+				} catch(Exception e) {}
 			}
 
 			System.out.println("Station " + station.getStationNum() + " Waiting Passengers - " + station.getLeftWaitPass() + 
-							   "\nEmpty Seats - "+ station.getLeftEmptySeats());
+							   " Empty Seats - "+ station.getLeftEmptySeats());
 
+			/* Passengers Leave and Board Train */
+			/*int threadsToReap = Math.min(station.getWaitingPass(direction), curr.getFreeSeats());
+			int threadsReaped = 0;
+			System.out.println("Expected Free Seats: " + curr.getFreeSeats() +
+							   " Expected Passengers Left: " + station.getWaitingPass(direction));
+
+			while(threadsReaped < threadsToReap) {
+				if (threadsCompleted > 0) {
+					threadsReaped++;
+					station_on_board(station, threadsReaped == threadsToReap, station.getWaitPassengers(direction).get(0));
+					try { curr.trainThread.sleep(500); } catch(Exception e) {}
+				}
+			}
+
+			passengersLeft -= threadsReaped;
+			passengersBoarded += threadsReaped;*/
+
+			/* Train leaves specific station */
 			station.getLock().lock();
 			station.setEmptySeats(direction, 0);
 			station.setTotalSeats(direction, 0);
 			System.out.println("Train " + curr.getTrainNum() + " leaves Station " + station.getStationNum());
 			station.setLeftTrain(null);
 			station.getLock().unlock();
-			try {Thread.sleep(1000);} catch(Exception e) {}
 		}
-		try {Thread.sleep(1000);} catch(Exception e) {}
 	}
 
 	public boolean station_wait_for_train(Station station, Passenger pass, boolean alreadyWaited, boolean direction) {
@@ -155,4 +188,24 @@ public class CalTrain {
 		}
 		return ctr;
 	}
+
+	public void countPassengersBoarded(int num) {
+		passengersBoarded += num;
+	}
+
+	public void countPassengersLeft(int num) {
+		passengersLeft -= num;
+	}
+
+	public int getPassBoarded() {
+		return passengersBoarded;
+	}
+
+	public int getPassLeft() {
+		return passengersLeft;
+	}
+
+	private int passengersBoarded = 0;
+	private int passengersLeft = 10;
+	private int threadsCompleted = 10;
 }
