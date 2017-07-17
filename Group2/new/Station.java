@@ -193,6 +193,7 @@ public class Station {
 	public void waitPassSeated() {
 		try {
 			all_pass_seated.await();
+			Thread.sleep(1500);
 		} catch(Exception e){}
 	}
 

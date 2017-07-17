@@ -12,6 +12,7 @@ public class CalTrain {
 			/* Train arrives at specific station */
 			station.getLock().lock();
 			int trainExiters = station_off_board(station, curr);
+			CalTrainDriver.totalPassServed += trainExiters;
 			station.setEmptySeats(direction, curr.getFreeSeats());
 			station.setTotalSeats(direction, curr.getNumSeats());
 			station.getLock().unlock();
@@ -23,6 +24,7 @@ public class CalTrain {
 					try {
 						station.signalTrain();
 						station.waitPassSeated();
+						//Thread.sleep(1000);
 					} catch(Exception e) {}
 				}
 				System.out.println("Station " + station.getStationNum() + " Waiting Passengers - " 
@@ -34,6 +36,7 @@ public class CalTrain {
 					try {
 						station.signalTrain(); 
 						station.waitPassSeated();
+						//Thread.sleep(1000);
 					} catch(Exception e) {}
 				}
 				System.out.println("Station " + station.getStationNum() + " Waiting Passengers - " 
@@ -53,6 +56,7 @@ public class CalTrain {
 			/* Train arrives at specific station */
 			station.getLock().lock();
 			int trainExiters = station_off_board(station, curr);
+			CalTrainDriver.totalPassServed += trainExiters;
 			station.setEmptySeats(direction, curr.getFreeSeats());
 			station.setTotalSeats(direction, curr.getNumSeats());
 			station.getLock().unlock();
@@ -104,7 +108,7 @@ public class CalTrain {
 			while(station.getRightTrainPass() <= station.getRightEmptySeats()) {
 				try {
 					station.waitTrain();
-					Thread.sleep(1000);
+				//	Thread.sleep(800);
 				}
 				catch(Exception e) {}
 			}
@@ -122,7 +126,7 @@ public class CalTrain {
 			while(station.getLeftTrainPass() <= station.getLeftEmptySeats()) {
 				try {
 					station.waitTrain();
-					Thread.sleep(1000);
+				//	Thread.sleep(800);
 				}
 				catch(Exception e) {}
 			}
@@ -138,49 +142,70 @@ public class CalTrain {
 		return alreadyBoarded;
 	}
 
-	public void station_on_board(Station station, boolean all, Passenger pass) {
-		station.getLock().lock();
-		station.decWaitPass(pass, pass.getDirection());
-		station.decStandPass(pass.getDirection());
-		station.decEmptySeats(pass.getDirection());
-		station.getLock().unlock();
-
-		//System.out.println("Pass " + pass.getPassNum() + " Direction = " + pass.getDirection() +
-						 //  " Train = " + station.getRightTrain());
-
+	public boolean station_on_board(Station station, boolean all, Passenger pass) {
+		
+		boolean boarded = false;
+		System.out.println("BOARDING: Pass " + pass.getPassNum() + " Direction = " + pass.getDirection() + station.getRightTrain());						 
+		//  " Train = " + station.getRightTrain());
 		if (pass.getDirection() && station.getRightTrain() != null)	// GENERAL: Train is to the right
 		{
 			station.getRightTrain().addRiding(pass);
-			System.out.println("Passenger " + pass.getPassNum() + " is on board at Train " + 
+			station.getLock().lock();
+			station.decWaitPass(pass, pass.getDirection());
+			station.decStandPass(pass.getDirection());
+			station.decEmptySeats(pass.getDirection());
+			station.getLock().unlock();
+			System.out.println("\n???Passenger " + pass.getPassNum() + " is on board at Train " + 
 						       station.getRightTrain().getTrainNum());
 			if (station.getRightEmptySeats() == 0 || station.getRightTrainPass() == 0 || all)
 				station.signalPassSeated();
+			boarded = true;
 		}
 		else if (!pass.getDirection() && station.getRightTrain() != null) // If Passenger boards on Station 7
 		{
 			station.getRightTrain().addRiding(pass);
-			System.out.println("Passenger " + pass.getPassNum() + " is on board at Train " + 
+			station.getLock().lock();
+			station.decWaitPass(pass, pass.getDirection());
+			station.decStandPass(pass.getDirection());
+			station.decEmptySeats(pass.getDirection());
+			station.getLock().unlock();
+			System.out.println("\n???Passenger " + pass.getPassNum() + " is on board at Train " + 
 						       station.getRightTrain().getTrainNum());
 			if (station.getRightEmptySeats() == 0 || station.getLeftTrainPass() == 0 || all)
 				station.signalPassSeated();
+			boarded = true;
 		}
 		else if (!pass.getDirection() && station.getLeftTrain() != null) // GENERAL: Train is to the left
 		{
 			station.getLeftTrain().addRiding(pass);
-			System.out.println("Passenger " + pass.getPassNum() + " is on board at Train " + 
+			station.getLock().lock();
+			station.decWaitPass(pass, pass.getDirection());
+			station.decStandPass(pass.getDirection());
+			station.decEmptySeats(pass.getDirection());
+			station.getLock().unlock();
+			System.out.println("\n???Passenger " + pass.getPassNum() + " is on board at Train " + 
 						       station.getLeftTrain().getTrainNum());
 			if (station.getLeftEmptySeats() == 0 || station.getLeftTrainPass() == 0 || all)
 				station.signalPassSeated();
+			boarded = true;
 		}
 		else if (pass.getDirection() && station.getLeftTrain() != null)	// If Passenger boards on Station 0
 		{
 			station.getLeftTrain().addRiding(pass);
-			System.out.println("Passenger " + pass.getPassNum() + " is on board at Train " + 
+			station.getLock().lock();
+			station.decWaitPass(pass, pass.getDirection());
+			station.decStandPass(pass.getDirection());
+			station.decEmptySeats(pass.getDirection());
+			station.getLock().unlock();
+			System.out.println("\n???Passenger " + pass.getPassNum() + " is on board at Train " + 
 						       station.getLeftTrain().getTrainNum());
 			if (station.getLeftEmptySeats() == 0 || station.getRightTrainPass() == 0 || all)
 				station.signalPassSeated();
+			boarded = true;
 		}
+
 		try {Thread.sleep(1000);} catch(Exception e) {}
+		return boarded;
 	}
 
 	public int station_off_board(Station station, Train t) {
