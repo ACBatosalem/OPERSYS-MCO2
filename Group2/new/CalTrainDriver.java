@@ -38,17 +38,17 @@ public class CalTrainDriver {
 		int totalPassengersBoarded = 0;
 		int maxFreeSeats = 5;
 		int trainCtr = 0;
-		while((passengersLeft > 0 && trainCtr < 6)) 
-		{
+		while((passengersLeft > 0 && trainCtr < 6) || totalPassServed != totalPassengers) {
 			if(totalNumSeats < totalPassengers) {
-				int freeSeats = (int)(Math.floor(Math.random() * maxFreeSeats)) + 1;
+				//int freeSeats = (int)(Math.floor(Math.random() * maxFreeSeats)) + 1;
+				int freeSeats = 5;
 				totalNumSeats += freeSeats;
 				/* Train is entering first station */
 				loadTrainReturned = false;
 				Train newTrain = new Train(allStations.get(0), ctrain, freeSeats, trainCtr);
 				loadTrainReturned = true;
-				System.out.println("Train " + newTrain.getTrainNum() + " entering Station 0 with "
-								   + freeSeats + " free seats");
+				//System.out.println("Train " + newTrain.getTrainNum() + " entering Station 0 with "
+				//				   + freeSeats + " free seats");
 				allTrains.add(newTrain);
 				trainCtr++;
 			}
@@ -78,22 +78,19 @@ public class CalTrainDriver {
 
 				/* Passengers board train */
 				while(threadsReaped < threadsToReap) {
+					boolean boarded = false;
 					if(threadsCompleted > 0) {
+						
 						if ((tempDirection && tempStatNum >= 0 && tempStatNum <= 6) ||
 							(!tempDirection && tempStatNum >= 1 && tempStatNum <= 7))
-						{
-							ctrain.station_on_board(allTrains.get(j).getBoardStation(), threadsReaped == threadsToReap,
+							boarded = ctrain.station_on_board(allTrains.get(j).getBoardStation(), threadsReaped == threadsToReap,
 													allTrains.get(j).getBoardStation().getWaitPassengers(tempDirection).get(0));
-							threadsReaped++;
-						}
 						else if ((tempDirection && tempStatNum == 7) ||
 								 (!tempDirection && tempStatNum == 0))
-						{
-							ctrain.station_on_board(allTrains.get(j).getBoardStation(), threadsReaped == threadsToReap,
+							boarded = ctrain.station_on_board(allTrains.get(j).getBoardStation(), threadsReaped == threadsToReap,
 													allTrains.get(j).getBoardStation().getWaitPassengers(!tempDirection).get(0));
+						if(boarded)
 							threadsReaped++;
-						}
-						
 						//try{allTrains.get(j).trainThread.sleep(500);} catch(Exception e){}
 					}
 				}
@@ -109,7 +106,7 @@ public class CalTrainDriver {
 		
 			System.out.println("Passengers left: " + passengersLeft);
 			System.out.println("Passengers boarded: " + totalPassengersBoarded);
-			//System.out.println("Passengers served: " + passengersServed);
+			System.out.println("Passengers served: " + totalPassServed);
 			System.out.println("\n-------------------------------\n");
 		}
 

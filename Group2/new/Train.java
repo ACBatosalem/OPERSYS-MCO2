@@ -43,7 +43,7 @@ public class Train implements Runnable {
 
 	public void removeRiding(Passenger pass) {
 		riding.remove(pass);
-		free = numSeats + riding.size();
+		free = numSeats - riding.size();
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class Train implements Runnable {
 				System.out.println("Train " + trainNum + " going to next station: " 
 							       + boardStation.getStationNum());
 			}
-			try{Thread.sleep(1000);} catch(Exception e) {}
+			try{Thread.sleep(500);} catch(Exception e) {}
 		}
 	}
 
