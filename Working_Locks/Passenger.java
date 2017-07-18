@@ -6,8 +6,6 @@ public class Passenger implements Runnable {
 		direction = determineDirection();
 		sync = system;
 		passNum = i;
-		alreadyBoarded = false;
-		alreadyWaited = false;
 		passThread.start();
 	}
 
@@ -37,7 +35,7 @@ public class Passenger implements Runnable {
 	public void run() {
 		while(true) {
 		//	while(!alreadyBoarded) {
-				alreadyBoarded = sync.station_wait_for_train(boardStation, this, alreadyWaited, direction);
+			sync.station_wait_for_train(boardStation, this, direction);
 			//	alreadyWaited = true;
 			//}
 			try {Thread.sleep(500);} catch(Exception e){}
@@ -48,8 +46,6 @@ public class Passenger implements Runnable {
 	private Station boardStation;
 	private Station leaveStation;
 	private int passNum;
-	private boolean alreadyBoarded;
-	private boolean alreadyWaited;
 	private boolean direction;
 	private Thread passThread = new Thread(this);
 }

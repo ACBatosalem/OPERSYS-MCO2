@@ -94,15 +94,12 @@ public class CalTrain {
 		}
 	}
 
-	public boolean station_wait_for_train(Station station, Passenger pass, boolean alreadyWaited, boolean direction) {
-		boolean alreadyBoarded = false;
-		if(!alreadyWaited) {
+	public void station_wait_for_train(Station station, Passenger pass, boolean direction) {
 			station.getLock().lock();
 			System.out.println("Passenger " + pass.getPassNum() + " arrives at Station " + station.getStationNum()
 							   + " (Leaves = Station " + pass.getLeaveStation().getStationNum() + 
 							   " Direction = " + pass.getDirection() + " )");
 			station.getLock().unlock();
-		}
 		if(direction) 
 		{
 			while(station.getRightTrainPass() <= station.getRightEmptySeats()) {
@@ -126,7 +123,7 @@ public class CalTrain {
 		
 		}
 
-		return alreadyBoarded;
+	//	return alreadyBoarded;
 	}
 
 	public boolean station_on_board(Station station, boolean all, Passenger pass) {
