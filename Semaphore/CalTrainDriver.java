@@ -23,7 +23,7 @@ public class CalTrainDriver {
 		System.out.println();
 
 		/* Initialize Passengers */
-		int totalPassengers = 10;
+		int totalPassengers = 15;
 		int passengersLeft = totalPassengers;
 		int passengersServed = totalPassengers;
 		for(int i=0;i<totalPassengers;i++) {
@@ -41,7 +41,7 @@ public class CalTrainDriver {
 		while((passengersLeft > 0 && trainCtr < 6) || totalPassServed != totalPassengers) {
 			if(totalNumSeats < totalPassengers) {
 				//int freeSeats = (int)(Math.floor(Math.random() * maxFreeSeats)) + 1;
-				int freeSeats = 10;
+				int freeSeats = 5;
 				totalNumSeats += freeSeats;
 				/* Train is entering first station */
 				loadTrainReturned = false;

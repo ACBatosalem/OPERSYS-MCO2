@@ -7,6 +7,7 @@ public class Station {
 		train_arrived = new Semaphore(0, true);
 		all_pass_seated = new Semaphore(0, true);
 		station_lock = new Semaphore(1, true);
+		off_board = new Semaphore(1,true);
 		stationNum = num;
 		leftEmptySeats = rightEmptySeats = 0;
 		leftTrainPass = rightTrainPass = 0;
@@ -190,7 +191,7 @@ public class Station {
 
 	public void waitPassSeated(String w) {
 		try {
-			System.out.println("wait pass "+ w);
+		//	System.out.println("wait pass "+ w);
 			all_pass_seated.acquire();
 			Thread.sleep(1000);
 		} catch(Exception e){}
@@ -198,28 +199,28 @@ public class Station {
 
 	public void signalPassSeated(String w) {
 		try {
-			System.out.println("signal pass "+ w);
+		//	System.out.println("signal pass "+ w);
 			all_pass_seated.release();
 		} catch(Exception e){}
 	}
 
 	public void waitTrain(String w) {
 		try {
-			System.out.println("wait train "+w);
+		//	System.out.println("wait train "+w);
 			train_arrived.acquire();
 		} catch(Exception e){}
 	}
 
 	public void signalTrain(String w) {
 		try {
-			System.out.println("signal train "+w);
+		//	System.out.println("signal train "+w);
 			train_arrived.release();
 		} catch(Exception e){}
 	}
 
 	public void waitStation(String w) {
 		try {
-			System.out.println("wait station "+w);
+		//	System.out.println("wait station "+w);
 			station_lock.acquire();
 		} catch(Exception e){}
 	}
@@ -227,8 +228,23 @@ public class Station {
 	public void signalStation(String w) {
 		try {
 
-			System.out.println("signal station "+w);
+		//	System.out.println("signal station "+w);
 			station_lock.release();
+		} catch(Exception e){}
+	}
+
+	public void waitOffBoard(String w) {
+		try {
+		//	System.out.println("wait offboard "+w);
+			off_board.acquire();
+		} catch(Exception e){}
+	}
+
+	public void signalOffBoard(String w) {
+		try {
+
+		//	System.out.println("signal offboard "+w);
+			off_board.release();
 		} catch(Exception e){}
 	}
 
@@ -248,6 +264,7 @@ public class Station {
 	private Semaphore train_arrived;
 	private Semaphore all_pass_seated;
 	private Semaphore station_lock;
+	private Semaphore off_board;
 	private int stationNum;
 	private ArrayList<Passenger> waitLeftPassengers, waitRightPassengers;
 	private int leftEmptySeats, rightEmptySeats;

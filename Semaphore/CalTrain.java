@@ -198,7 +198,7 @@ public class CalTrain {
 	public int station_off_board(Station station, Train t) {
 		int ctr = 0;
 		if (!t.getRiding().isEmpty()) {
-			station.waitStation("ob1");
+			station.waitOffBoard("ob1");
 			for(int k=0;k<t.getRiding().size();k++) {
 				if (t.getRiding().get(k).getLeaveStation().getStationNum() == station.getStationNum()) {
 					station.incEmptySeats(t.getRiding().get(k).getDirection());
@@ -210,7 +210,7 @@ public class CalTrain {
 					ctr++;
 				}
 			}
-			station.signalStation("ob1");
+			station.signalOffBoard("ob1");
 			try {Thread.sleep(500);} catch(Exception e) {}
 		}
 		return ctr;
