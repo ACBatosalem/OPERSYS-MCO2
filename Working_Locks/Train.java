@@ -8,6 +8,7 @@ public class Train implements Runnable {
 		numSeats = free;
 		this.trainNum = trainNum;
 		toTheRight = true;
+		continueRun = true;
 		trainThread.start();
 		riding = new ArrayList<Passenger>();
 	}
@@ -46,9 +47,17 @@ public class Train implements Runnable {
 		free = numSeats - riding.size();
 	}
 
+	public void stopRun() {
+		continueRun = false;
+	}
+
+	public boolean getContinueRun() {
+		return continueRun;
+	}
+
 	@Override
 	public void run() {
-		while(true) {
+		while(getContinueRun()) {
 			if(toTheRight && boardStation.getRightTrain() == null) {
 				boardStation.getLock().lock();
 				boardStation.setRightTrain(this);
@@ -88,6 +97,7 @@ public class Train implements Runnable {
 	private int free, trainNum;
 	private final int numSeats;
 	private boolean toTheRight; /* True = Right. False = Left */
+	private boolean continueRun;
 	public Thread trainThread = new Thread(this);
 	private ArrayList<Passenger> riding;
 }

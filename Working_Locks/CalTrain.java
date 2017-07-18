@@ -129,7 +129,7 @@ public class CalTrain {
 	public boolean station_on_board(Station station, boolean all, Passenger pass) {
 		
 		boolean boarded = false;
-		System.out.println("BOARDING: Pass " + pass.getPassNum() + " Direction = " + pass.getDirection() + station.getRightTrain());						 
+		//System.out.println("BOARDING: Pass " + pass.getPassNum() + " Direction = " + pass.getDirection() + station.getRightTrain());						 
 		//  " Train = " + station.getRightTrain());
 		if (pass.getDirection() && station.getRightTrain() != null)	// GENERAL: Train is to the right
 		{
@@ -139,12 +139,11 @@ public class CalTrain {
 			station.decStandPass(pass.getDirection());
 			station.decEmptySeats(pass.getDirection());
 			station.getLock().unlock();
-			System.out.println("\n???Passenger " + pass.getPassNum() + " is on board at Train " + 
+			System.out.println("\nPassenger " + pass.getPassNum() + " is on board at Train " + 
 						       station.getRightTrain().getTrainNum() + " " + station.getRightEmptySeats() + " " 
 						       + all);
 			if (station.getRightEmptySeats() == 0 || all){
 				station.signalPassSeated();
-				System.out.println("SIGNALED!!!!!");
 			}
 			boarded = true;
 		}
@@ -156,12 +155,11 @@ public class CalTrain {
 			station.decStandPass(pass.getDirection());
 			station.decEmptySeats(pass.getDirection());
 			station.getLock().unlock();
-			System.out.println("\n???Passenger " + pass.getPassNum() + " is on board at Train " + 
+			System.out.println("\nPassenger " + pass.getPassNum() + " is on board at Train " + 
 						       station.getRightTrain().getTrainNum() + " " + station.getRightEmptySeats() + " " 
 						       + all);
 			if (station.getRightEmptySeats() == 0 || all){
 				station.signalPassSeated();
-				System.out.println("SIGNALED!!!!!");
 			}
 			boarded = true;
 		}
@@ -173,12 +171,11 @@ public class CalTrain {
 			station.decStandPass(pass.getDirection());
 			station.decEmptySeats(pass.getDirection());
 			station.getLock().unlock();
-			System.out.println("\n???Passenger " + pass.getPassNum() + " is on board at Train " + 
+			System.out.println("\nPassenger " + pass.getPassNum() + " is on board at Train " + 
 						       station.getLeftTrain().getTrainNum() + " " + station.getLeftEmptySeats() + " " 
 						       + all);
 			if (station.getLeftEmptySeats() == 0 || all){
 				station.signalPassSeated();
-				System.out.println("SIGNALED!!!!!");
 			}
 			boarded = true;
 		}
@@ -190,12 +187,11 @@ public class CalTrain {
 			station.decStandPass(pass.getDirection());
 			station.decEmptySeats(pass.getDirection());
 			station.getLock().unlock();
-			System.out.println("\n???Passenger " + pass.getPassNum() + " is on board at Train " + 
+			System.out.println("\nPassenger " + pass.getPassNum() + " is on board at Train " + 
 						       station.getLeftTrain().getTrainNum() + " " + station.getLeftEmptySeats() + " " 
 						       + all);
 			if (station.getLeftEmptySeats() == 0 || all){
 				station.signalPassSeated();
-				System.out.println("SIGNALED!!!!!");
 			}
 			boarded = true;
 		}
