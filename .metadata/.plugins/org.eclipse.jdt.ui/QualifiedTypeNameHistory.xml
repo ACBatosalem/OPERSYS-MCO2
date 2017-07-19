@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="javafx.scene.shape.Polyline"/>
+<fullyQualifiedTypeName name="javafx.scene.shape.PathElement"/>
+<fullyQualifiedTypeName name="java.util.TimerTask"/>
+<fullyQualifiedTypeName name="javafx.scene.image.ImageView"/>
+<fullyQualifiedTypeName name="javafx.scene.layout.Pane"/>
+<fullyQualifiedTypeName name="java.util.Timer"/>
+<fullyQualifiedTypeName name="javafx.animation.Timeline"/>
+<fullyQualifiedTypeName name="javafx.animation.KeyFrame"/>
+<fullyQualifiedTypeName name="javafx.util.Duration"/>
+<fullyQualifiedTypeName name="javafx.animation.KeyValue"/>
+<fullyQualifiedTypeName name="javafx.animation.AnimationTimer"/>
+<fullyQualifiedTypeName name="javafx.scene.Scene"/>
+</qualifiedTypeNameHistroy>

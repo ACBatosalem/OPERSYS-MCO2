@@ -1,0 +1,278 @@
+package caltrain;
+
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javafx.animation.Animation;
+import javafx.animation.Interpolator;
+import javafx.animation.PathTransition;
+import javafx.animation.PathTransition.OrientationType;
+import javafx.animation.Timeline;
+
+import javafx.application.Application;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.InputEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+
+import javafx.scene.shape.ArcTo;
+import javafx.scene.shape.ClosePath;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.scene.shape.PathElement;
+import javafx.scene.shape.Polyline;
+import javafx.stage.Stage;
+
+import javafx.util.Duration;
+
+public class PathTransitionExample extends Application
+{
+	private Button stations[] = new Button[8];
+	private Pane layout = new Pane();
+	private final String[] stationType = {"sHorizontal", "sVertical"};
+	private Boolean lock = false;
+	private ArrayList<PathTransition> anims = new ArrayList<>();
+	private ArrayList<Path> roads = new ArrayList<>();
+	private ArrayList<ImageView> cars = new ArrayList<>();
+	private Group root = new Group();
+	private PathElement[] pathNorth = 
+		   {
+				   new MoveTo(10, 145),
+				   new LineTo(10, 80),
+				   new ArcTo(90, 90, 0, 80, 10, false, true),
+				   new LineTo(290, 10),
+				   new ArcTo(90, 90, 0, 400, 110, false, true),
+				   new LineTo(390, 300),
+				   new ArcTo(90, 90, 0, 300, 390, false, true),
+				   new LineTo(100, 390),
+				   new ArcTo(90, 90, 0, 10, 300, false, true),
+				   new ClosePath()
+		   };
+	
+	/*
+	    * STATION COORDINATES
+	    * 0 - 40, 150
+	    * 1 - 40, 300
+	    * 2 - 150, 385
+	    * 3 - 300, 385
+	    * 4 - 390, 300
+	    * 5 - 390, 150
+	    * 6 - 300, 40
+	    * 7 - 150, 40
+	*/
+	
+	private PathElement[] pathSouth = 
+	      {
+	    	 new MoveTo(40, 145),
+	         new LineTo(40, 280),
+	         new ArcTo(90, 90, 0, 80, 360, false, false),
+	         new LineTo(300, 360),
+	         new ArcTo(90, 90, 0, 360, 290, false, false),
+	         new LineTo(360, 80),
+	         new ArcTo(90, 90, 0, 310, 40, false, false),
+	         new LineTo(90, 40),
+	         new ArcTo(90, 90, 0, 40, 90, false, false),
+	         new ClosePath()
+	      };
+	
+   @Override
+   public void start(Stage primaryStage)
+   {
+      setUpStations();
+      
+      layout.setId("layout");
+
+      addChildren();
+      
+      spawnTrain(true);
+      
+      root.setTranslateX(10);
+      root.setTranslateY(10);
+      
+      layout.setMaxSize(500, 500);
+      layout.setMinSize(500, 500);
+      Scene scene = new Scene(root);
+      
+      scene.getStylesheets().add("style.css");
+      
+      scene.setOnKeyPressed(e -> {
+    	  switch(e.getCode()){
+    	  case ENTER:	
+    		  for(int i = 0; i < anims.size(); i++){
+    			  Animation.Status status = anims.get(i).getStatus();
+    			  if (status == Animation.Status.RUNNING &&
+    					  status != Animation.Status.PAUSED)
+    				  anims.get(i).pause();
+    			  else
+    				  anims.get(i).play();
+    		  }
+    		  break;
+    	  case K: 
+    		  if(anims.size() < 16)
+    		  spawnTrain(true); 
+    		  break;
+    	  case L: 
+    		  if(anims.size() < 16)
+    		  spawnTrain(false); 
+    		  break;
+    	  case P: lock = true; break;
+    	  case O: lock = false; break;
+    	  default: break;
+    	  }
+      });
+
+      primaryStage.setTitle("PathTransition");
+      primaryStage.setScene(scene);
+      primaryStage.show();
+      primaryStage.sizeToScene();
+      primaryStage.setResizable(false);
+   }
+
+   
+   private void setUpStations(){
+	   
+	   for(int i = 0; i < stations.length; i++){
+		   stations[i] = new Button();
+		   
+		   if(i == 0 || i == 1 || i == 4 || i == 5){
+			   stations[i].setId(stationType[0]);
+			   stations[i].setMinSize(74, 54);
+		   }
+		   else{
+			   stations[i].setId(stationType[1]);
+			   stations[i].setMinSize(54, 74);
+		   }
+			   
+	   }
+	   
+	   /*
+	    * STATION COORDINATES
+	    * 0 - 40, 150
+	    * 1 - 40, 300
+	    * 2 - 150, 385
+	    * 3 - 300, 385
+	    * 4 - 390, 300
+	    * 5 - 390, 150
+	    * 6 - 300, 40
+	    * 7 - 150, 40
+	    */
+	   
+	   stations[0].setTranslateX(40);
+	   stations[0].setTranslateY(150);
+	   stations[1].setTranslateX(40);
+	   stations[1].setTranslateY(300);
+
+	   stations[2].setTranslateX(150);
+	   stations[2].setTranslateY(385);
+	   stations[3].setTranslateX(300);
+	   stations[3].setTranslateY(385);
+	   
+	   stations[4].setTranslateX(390);
+	   stations[4].setTranslateY(300);
+	   stations[5].setTranslateX(390);
+	   stations[5].setTranslateY(150);
+	   
+	   stations[6].setTranslateX(300);
+	   stations[6].setTranslateY(40);
+	   stations[7].setTranslateX(150);
+	   stations[7].setTranslateY(40);
+   }
+   
+   private void spawnTrain(boolean north){
+	   createCar();
+	   createPath(north);
+	   
+	   PathTransition anim = new PathTransition();
+	   
+	   anim.setNode(cars.get(cars.size() - 1));
+	   anim.setPath(roads.get(roads.size() - 1));
+	   anim.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
+	   anim.setInterpolator(Interpolator.LINEAR);
+	   anim.setDuration(new Duration(6000));
+	   anim.setCycleCount(Timeline.INDEFINITE);
+	   
+	   anims.add(anim);
+	   anims.get(anims.indexOf(anim)).play();
+	   
+	   System.out.println("added");
+	   
+	   root.getChildren().addAll(stations);
+   }
+   
+   private void createPath(boolean north){
+	   Path road = new Path();
+	   road.setStroke(Color.TRANSPARENT);
+	   road.setStrokeWidth(25);
+	   
+	   Polyline path = new Polyline();
+	   path.setLayoutX(50);
+	   path.setLayoutY(50);
+	   
+	   /*
+	    * STATION COORDINATES
+	    * 0 - 40, 150
+	    * 1 - 40, 300
+	    * 2 - 150, 385
+	    * 3 - 300, 385
+	    * 4 - 390, 300
+	    * 5 - 390, 150
+	    * 6 - 300, 40
+	    * 7 - 150, 40
+	    * 
+	    * new MoveTo(40, 145),
+	         new LineTo(40, 280),
+	         new ArcTo(90, 90, 0, 80, 360, false, false),
+	         new LineTo(300, 360),
+	         new ArcTo(90, 90, 0, 360, 290, false, false),
+	         new LineTo(360, 80),
+	         new ArcTo(90, 90, 0, 310, 40, false, false),
+	         new LineTo(90, 40),
+	         new ArcTo(90, 90, 0, 40, 90, false, false),
+	         new ClosePath()
+	    */
+	   
+	   
+	   if(north)
+		   road.getElements().addAll(pathNorth);
+	   else
+		   road.getElements().addAll(pathSouth);
+
+	   road.setTranslateX(50);
+	   road.setTranslateY(50);
+	   
+	   roads.add(road);
+
+	   root.getChildren().removeAll(roads);
+	   
+	   root.getChildren().addAll(roads);
+   }
+   
+   private void createCar(){
+	   ImageView car = new ImageView();
+	   car.setImage(new Image("sprites/pellettrain.png"));
+	   car.setX(55);
+	   car.setY(165);
+	   car.setRotate(90);
+	   cars.add(car);
+	   
+	   root.getChildren().add(car);
+	   root.getChildren().removeAll(stations);
+   }
+   
+   private void addChildren(){
+	   root.getChildren().addAll(layout);
+	   root.getChildren().addAll(stations);
+   }
+
+   public static void main(String args[]){ 
+      launch(args); 
+   } 
+}
