@@ -67,11 +67,12 @@ public class CalTrain {
 	public void station_wait_for_train(Station station, Passenger pass) 
 	{
 		/* Passenger arrives at station */
-		station.getLock().lock();
-		System.out.println("Passenger " + pass.getPassNum() + " arrives at Station " 
-						   + station.getStationNum() + ". Destination is Station " + 
-						   pass.getLeaveStation().getStationNum());
-		station.getLock().unlock();
+// !! why is this still getting locked wala namang manipulated var?
+//		station.getLock().lock();
+//		System.out.println("Passenger " + pass.getPassNum() + " arrives at Station " 
+//						   + station.getStationNum() + ". Destination is Station " + 
+//						   pass.getLeaveStation().getStationNum());
+//		station.getLock().unlock();
 
 		/* Passenger waits for a train */
 		while (station.getTrainPass(pass.getDirection()) <= station.getEmptySeats(pass.getDirection()))

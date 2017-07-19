@@ -1,7 +1,0 @@
-package caltrain;
-
-public class TrackController {
-	public TrackController(){
-		
-	}
-}

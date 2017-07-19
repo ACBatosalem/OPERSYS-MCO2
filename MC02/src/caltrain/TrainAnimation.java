@@ -127,7 +127,7 @@ public class TrainAnimation implements Runnable{
             }
         };
 		
-		animation.start();
+		//animation.start();
 	}
 	
 	public ImageView getTrain(){

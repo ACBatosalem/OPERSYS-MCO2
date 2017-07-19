@@ -17,15 +17,16 @@ public class TrackView {
 		layout = new Pane();
 		scene = new Scene(layout, 500, 500);
 		
-		createStation();
+		createStation(20, 150);
+		createStation(20, 300);
 	}
 	
-	public void createStation(){
+	public void createStation(double x, double y){
 		station = new ImageView();
 		station.setImage(new Image("sprites/horizontalstation.png"));
 		
-		station.setX(0);
-		station.setY(100);
+		station.setX(x);
+		station.setY(y);
 		
 		layout.getChildren().add(station);
 	}

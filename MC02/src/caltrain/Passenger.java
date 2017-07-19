@@ -36,9 +36,8 @@ public class Passenger implements Runnable {
 	@Override
 	public void run() {
 		while(true) {
-			System.out.println("passenger thread");
 			sync.station_wait_for_train(boardStation, this);
-			try {Thread.sleep(500);} catch(Exception e){}
+			try {Thread.sleep(500);} catch(Exception e){e.printStackTrace();}
 		}
 	}
 
