@@ -1,0 +1,15 @@
+#layout{
+	-fx-background-image: url('sprites/track.png');
+}
+
+.button{
+	-fx-background-color: transparent;
+}
+
+#sHorizontal{
+	-fx-background-image: url('sprites/horizontalstation.png');
+}
+
+#sVertical{
+	-fx-background-image: url('sprites/verticalstation.png');
+}
