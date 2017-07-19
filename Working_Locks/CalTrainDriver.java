@@ -7,10 +7,37 @@ public class CalTrainDriver {
 		return (num != number) ? number : outStat(num);
 	}
 
+	public static boolean insertPass() {
+		int number = (int)Math.floor(Math.random()*10);
+		return (number >= 5) ? true : false;
+	}
+
 	public static void main(String[] args) {
+		/* System-related variables */
 		CalTrain ctrain = new CalTrain();
 		ArrayList<Station> allStations = new ArrayList<Station>();
 		ArrayList<Train> allTrains = new ArrayList<Train>();
+
+		/* Passenger-related variables */
+		int totalPassengers = 10;
+		int passengersLeft = totalPassengers;	// Passengers left to be picked up
+		int passengersServed = totalPassengers;	// Passengers who haven't arrived to their destination
+		boolean trainsReturned = true;			// If trains haven't returned to Station 0
+
+		/* Program running-related variables */
+		int totalPassengersBoarded = 0;
+		int totalNumSeats = 0;
+		int threadsCompleted = 0;
+		int maxFreeSeats = 5;
+		int trainCtr = 0;
+		int passCtr = 10;
+		int maxInsert = 0;
+		boolean loadTrainReturned = false;
+
+		/* Temporary Variables */
+		int inStationNum, freeSeats;
+		Passenger tempRobot;
+		Train tempTrain;
 
 		/* Initialize Stations */
 		for(int i=0;i<8;i++) {
@@ -19,38 +46,52 @@ public class CalTrainDriver {
 				allStations.get(i-1).setRightStation(allStations.get(i));
 				allStations.get(i).setLeftStation(allStations.get(i-1));
 			}
+			System.out.println(allStations.get(i).displayNextStations());
 		}
-		System.out.println();
+		System.out.println();	// Separate Station Initialization Printing
 
 		/* Initialize Passengers */
-		int totalPassengers = 10;
-		int passengersLeft = totalPassengers;
-		int passengersServed = totalPassengers;
-		boolean trainsReturned = true;
-		for(int i=0;i<totalPassengers;i++) {
-			int inStatNum = (int)Math.floor(Math.random()*8);
-			Passenger robot = new Passenger(allStations.get(inStatNum), ctrain, i, allStations.get(CalTrainDriver.outStat(inStatNum)));
+		for(int i=0;i<totalPassengers;i++) 
+		{
+			inStationNum = (int)Math.floor(Math.random()*8);
+			tempRobot = new Passenger(allStations.get(inStationNum), ctrain, i, allStations.get(CalTrainDriver.outStat(inStationNum)));
 			threadsCompleted++;
 			try {Thread.sleep(300);} catch(Exception e){}
 		}
 
 		/* Actual Program */
 		System.out.println("\n---------------------\n");
-		int totalPassengersBoarded = 0;
-		int maxFreeSeats = 5;
-		int trainCtr = 0;
-		while(totalPassServed != totalPassengers || trainsReturned) {
-			
-			/* Add Trains into System */
-			if(totalNumSeats < totalPassengers) {
-				int freeSeats = 5;
+		while(totalPassServed != totalPassengers || trainsReturned) 
+		{
+			/* Add Trains into Railway if deficient */
+			if(totalNumSeats < totalPassengers) 
+			{
+				/* Establish Free Seats */
+				freeSeats = 5;
 				totalNumSeats += freeSeats;
+
 				/* Train is entering first station */
 				loadTrainReturned = false;
-				Train newTrain = new Train(allStations.get(0), ctrain, freeSeats, trainCtr);
+				tempTrain = new Train(allStations.get(0), ctrain, freeSeats, trainCtr);
 				loadTrainReturned = true;
-				allTrains.add(newTrain);
+
+				/* Indicates successful adding of Train */
+				allTrains.add(tempTrain);
 				trainCtr++;
+			}
+
+			/* Random generation of passengers */
+			if (insertPass() && maxInsert < 5) {
+				inStationNum = (int)Math.floor(Math.random()*8);
+				tempRobot = new Passenger(allStations.get(inStationNum), ctrain, passCtr, 
+										  allStations.get(CalTrainDriver.outStat(inStationNum)));
+				threadsCompleted++;
+				passCtr++;
+				maxInsert++;
+				totalPassengers++;
+				passengersLeft++;
+				passengersServed++;
+				try {Thread.sleep(300);} catch(Exception e){}				
 			}
 
 			/* How Train Works */
@@ -60,28 +101,16 @@ public class CalTrainDriver {
 				int threadsToReap = -1;
 				int threadsReaped = 0;
 
-				if ((tempDirection && tempStatNum >= 0 && tempStatNum <= 6) ||
-					(!tempDirection && tempStatNum >= 1 && tempStatNum <= 7))
-					threadsToReap = Math.min(allTrains.get(j).getBoardStation().getWaitingPass(tempDirection), 
-											 allTrains.get(j).getFreeSeats());
-
-				else if ((tempDirection && tempStatNum == 7) ||
-						 (!tempDirection && tempStatNum == 0))
-					threadsToReap = Math.min(allTrains.get(j).getBoardStation().getWaitingPass(!tempDirection),
-											 allTrains.get(j).getFreeSeats());
+				threadsToReap = Math.min(allTrains.get(j).getBoardStation().getWaitPassCount(tempDirection),
+										 allTrains.get(j).getFreeSeats());
 
 				/* Passengers board train */
 				while(threadsReaped < threadsToReap) {
 					boolean boarded = false;
 					if(threadsCompleted > 0) {
-						if ((tempDirection && tempStatNum >= 0 && tempStatNum <= 6) ||
-							(!tempDirection && tempStatNum >= 1 && tempStatNum <= 7))
-							boarded = ctrain.station_on_board(allTrains.get(j).getBoardStation(), threadsReaped + 1 == threadsToReap, 
-													allTrains.get(j).getBoardStation().getWaitPassengers(tempDirection).get(0));
-						else if ((tempDirection && tempStatNum == 7) ||
-								 (!tempDirection && tempStatNum == 0))
-							boarded = ctrain.station_on_board(allTrains.get(j).getBoardStation(), threadsReaped + 1 == threadsToReap, 
-													allTrains.get(j).getBoardStation().getWaitPassengers(!tempDirection).get(0));
+						boarded = ctrain.station_on_board(allTrains.get(j).getBoardStation(),
+														  allTrains.get(j).getBoardStation().getWaitingPass(tempDirection).get(0),
+														  threadsReaped + 1 == threadsToReap);
 						if(boarded)
 							threadsReaped++;
 						//try{allTrains.get(j).trainThread.sleep(500);} catch(Exception e){}
@@ -94,14 +123,14 @@ public class CalTrainDriver {
 
 				if(threadsToReap != threadsReaped)
 					System.out.println("Error: Too many passengers on this train!");
-				try{allTrains.get(j).trainThread.sleep(500);} catch(Exception e){}
+				try{allTrains.get(j).getTrainThread().sleep(500);} catch(Exception e){}
 
 				/* Make sure all trains return to first station */
 				if (totalPassServed == totalPassengers && allTrains.get(j).getBoardStation().getStationNum() == 0) {
 					allTrains.get(j).stopRun();
 					allTrains.remove(allTrains.get(j));
 					j--;
-
+					System.out.println("STOPP");
 					if (allTrains.size() == 0) {
 						System.out.println("All trains are gone!");
 						trainsReturned = false;
@@ -122,8 +151,5 @@ public class CalTrainDriver {
 		}
 	}
 
-	public static boolean loadTrainReturned = false;
-	public static int threadsCompleted = 0;
-	public static int totalNumSeats = 0;
 	public static int totalPassServed = 0;
 }

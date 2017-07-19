@@ -1,11 +1,11 @@
 public class Passenger implements Runnable {
-	public Passenger(Station in, CalTrain system, int i, Station out) {
+	public Passenger(Station in, CalTrain system, int num, Station out) {
 		boardStation = in;
 		leaveStation = out;
 		boardStation.addPassenger(this, determineDirection());
 		direction = determineDirection();
 		sync = system;
-		passNum = i;
+		passNum = num;
 		passThread.start();
 	}
 
@@ -34,10 +34,7 @@ public class Passenger implements Runnable {
 	@Override
 	public void run() {
 		while(true) {
-		//	while(!alreadyBoarded) {
-			sync.station_wait_for_train(boardStation, this, direction);
-			//	alreadyWaited = true;
-			//}
+			sync.station_wait_for_train(boardStation, this);
 			try {Thread.sleep(500);} catch(Exception e){}
 		}
 	}

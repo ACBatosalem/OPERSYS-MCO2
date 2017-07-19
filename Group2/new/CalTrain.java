@@ -145,8 +145,8 @@ public class CalTrain {
 	public boolean station_on_board(Station station, boolean all, Passenger pass) {
 		
 		boolean boarded = false;
-		System.out.println("BOARDING: Pass " + pass.getPassNum() + " Direction = " + pass.getDirection() + station.getRightTrain());						 
-		//  " Train = " + station.getRightTrain());
+		System.out.println("BOARDING: Pass " + pass.getPassNum() + " Direction = " + 
+							pass.getDirection() + station.getRightTrain());						 
 		if (pass.getDirection() && station.getRightTrain() != null)	// GENERAL: Train is to the right
 		{
 			station.getRightTrain().addRiding(pass);
