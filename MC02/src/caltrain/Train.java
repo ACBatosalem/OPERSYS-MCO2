@@ -6,20 +6,22 @@ public class Train implements Runnable {
 	public Train(Station in, CalTrain system, int free, int trainNum) {
 		boardStation = in;
 		sync = system;
-		this.free = free;
+		freeSeats = free;
 		numSeats = free;
 		this.trainNum = trainNum;
-		toTheRight = true;
+		direction = true;
+		continueRun = true;
+		riders = new ArrayList<Passenger>();
 		trainThread.start();
-		riding = new ArrayList<Passenger>();
 	}
 
+	/* Getters and Setters */
 	public int getTrainNum() {
 		return trainNum;
 	}
 
 	public int getFreeSeats() {
-		return free;
+		return freeSeats;
 	}
 
 	public int getNumSeats() {
@@ -31,55 +33,62 @@ public class Train implements Runnable {
 	}
 
 	public boolean getDirection() {
-		return toTheRight;
+		return direction;
 	}
 
-	public ArrayList<Passenger> getRiding() {
-		return riding;
+	public ArrayList<Passenger> getRiders() {
+		return riders;
 	}
 
-	public void addRiding(Passenger pass) {
-		riding.add(pass);
-		free = numSeats - riding.size();
+	public boolean getContinueRun() {
+		return continueRun;
 	}
 
-	public void removeRiding(Passenger pass) {
-		riding.remove(pass);
-		free = numSeats - riding.size();
+	public Thread getTrainThread() {
+		return trainThread;
+	}
+
+	public void setDirection(boolean value) {
+		direction = value;
+	}
+
+	/* Other Functions */
+	public void addRider(Passenger pass) {
+		riders.add(pass);
+		freeSeats = numSeats - riders.size();
+	}
+
+	public void removeRider(Passenger pass) {
+		riders.remove(pass);
+		freeSeats = numSeats - riders.size();
+	}
+
+	public void stopRun() {
+		continueRun = false;
 	}
 
 	@Override
 	public void run() {
-		while(true) {
-			if(toTheRight && boardStation.getRightTrain() == null) {
+		while(getContinueRun()) {
+			if (boardStation.getTrain(direction) == null) 
+			{
+				/* Train arrives at station */
 				boardStation.getLock().lock();
-				boardStation.setRightTrain(this);
+				boardStation.setTrain(direction, this);
+			//	boardStation.getLock().unlock();
+
+				/* Executes loading train at station */
+				sync.station_load_train(boardStation, this);
+
+				/* Train leaves station */
+			//	boardStation.getLock().lock();
+				boardStation.setTrain(direction, null);
 				boardStation.getLock().unlock();
-				sync.station_load_train(boardStation, this, toTheRight); 
 
-				if (boardStation.getRightStation() == null)
-					toTheRight = false;
-				else if (boardStation.getLeftStation() == null)
-					toTheRight = true;
-				boardStation = boardStation.getNextStation(toTheRight);
-				
-				System.out.println("Train " + trainNum + " going to next station: " 
-							       + boardStation.getStationNum());
-			}
-			else if(!toTheRight && boardStation.getLeftTrain() == null) {
-				boardStation.getLock().lock();
-				boardStation.setLeftTrain(this);
-				boardStation.getLock().unlock();
-				sync.station_load_train(boardStation, this, toTheRight);
-
-				if (boardStation.getLeftStation() == null)
-					toTheRight = true;
-				else if (boardStation.getRightStation() == null)
-					toTheRight = false;		
-				boardStation = boardStation.getNextStation(toTheRight);
-
-				System.out.println("Train " + trainNum + " going to next station: " 
-							       + boardStation.getStationNum());
+				/* Train plans next destination */
+				boardStation = boardStation.getNextStation(direction);
+				System.out.println("Train " + trainNum + " is going next to Station "
+								   + boardStation.getStationNum());
 			}
 			try{Thread.sleep(500);} catch(Exception e) {}
 		}
@@ -87,9 +96,9 @@ public class Train implements Runnable {
 
 	private CalTrain sync;
 	private Station boardStation;
-	private int free, trainNum;
+	private int freeSeats, trainNum;
 	private final int numSeats;
-	private boolean toTheRight; /* True = Right. False = Left */
-	public Thread trainThread = new Thread(this);
-	private ArrayList<Passenger> riding;
+	private boolean continueRun, direction; /* True = Right. False = Left */
+	private ArrayList<Passenger> riders;
+	private Thread trainThread = new Thread(this);
 }

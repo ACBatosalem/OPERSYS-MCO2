@@ -1,0 +1,16 @@
+package caltrain;
+
+public class TrackController {
+	public TrackController(CalTrain model, TrackView view){
+		model.station_init(0);
+		view.createStation();
+		
+		view.scene.setOnKeyPressed(e -> {
+			switch(e.getCode()){
+			case ENTER: addTrain(); break;
+			case P: anim.get(0).pause(); break;
+			case O: anim.get(0).play(); break;
+			}
+		});
+	}
+}

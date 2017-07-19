@@ -9,6 +9,7 @@
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
 			<item value="new Train"/>
+			<item value="new train"/>
 			<item value="passenger"/>
 		</list>
 		<list key="replacehistory">

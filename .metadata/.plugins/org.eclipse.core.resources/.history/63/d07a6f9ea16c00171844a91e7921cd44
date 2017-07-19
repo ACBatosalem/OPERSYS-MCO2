@@ -1,0 +1,8 @@
+package caltrain;
+
+public class TrackController {
+	public TrackController(CalTrain model, TrackView view){
+		ctrain.station_init(0);
+		view.createStation();
+	}
+}

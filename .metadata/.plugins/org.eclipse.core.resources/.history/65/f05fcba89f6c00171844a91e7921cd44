@@ -1,0 +1,9 @@
+package caltrain;
+
+public class TrackView {
+	public Pane layout;
+	
+	public TrackView(){
+		
+	}
+}

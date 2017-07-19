@@ -14,14 +14,13 @@ public class TrainAnimation implements Runnable{
 	private boolean reverse = false;
 	private boolean down = false;
 	private boolean last = false;
-	
-	private double trainX;
-	private double trainY;
 
 	private ImageView train = new ImageView();
 	private AnimationTimer timer;
 	
 	private Scene scene;
+	
+	private Thread animation = new Thread(this);
 	
 	public TrainAnimation(Scene scene){
 
@@ -31,28 +30,10 @@ public class TrainAnimation implements Runnable{
 		train.setRotate(90);
 		
 		this.scene = scene;
-	}
-	
-	public ImageView getTrain(){
-		return train;
-	}
-	
-	public void play(){
-		timer.start();
-	}
-	
-	public void pause(){
-		timer.stop();
-	}
-
-	@Override
-	public void run() {
+		
 		timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-            	trainX = train.getLayoutX();
-            	trainY = train.getLayoutY();
-            	
             	if(num < scene.getHeight() - 50 && !right && !up && !reverse){
             		num += 5;
                 	train.setTranslateY(train.getLayoutY() + num);
@@ -145,5 +126,24 @@ public class TrainAnimation implements Runnable{
 //            	}
             }
         };
+		
+		animation.start();
+	}
+	
+	public ImageView getTrain(){
+		return train;
+	}
+	
+	public void play(){
+		timer.start();
+	}
+	
+	public void pause(){
+		timer.stop();
+	}
+
+	@Override
+	public void run() {
+		play();
 	}
 }

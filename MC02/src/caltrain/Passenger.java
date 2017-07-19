@@ -1,15 +1,13 @@
 package caltrain;
 
 public class Passenger implements Runnable {
-	public Passenger(Station in, CalTrain system, int i, Station out) {
+	public Passenger(Station in, CalTrain system, int num, Station out) {
 		boardStation = in;
 		leaveStation = out;
 		boardStation.addPassenger(this, determineDirection());
 		direction = determineDirection();
 		sync = system;
-		passNum = i;
-		alreadyBoarded = false;
-		alreadyWaited = false;
+		passNum = num;
 		passThread.start();
 	}
 
@@ -38,10 +36,8 @@ public class Passenger implements Runnable {
 	@Override
 	public void run() {
 		while(true) {
-			while(!alreadyBoarded) {
-				alreadyBoarded = sync.station_wait_for_train(boardStation, this, alreadyWaited, direction);
-				alreadyWaited = true;
-			}
+			System.out.println("passenger thread");
+			sync.station_wait_for_train(boardStation, this);
 			try {Thread.sleep(500);} catch(Exception e){}
 		}
 	}
@@ -50,8 +46,6 @@ public class Passenger implements Runnable {
 	private Station boardStation;
 	private Station leaveStation;
 	private int passNum;
-	private boolean alreadyBoarded;
-	private boolean alreadyWaited;
 	private boolean direction;
 	private Thread passThread = new Thread(this);
 }

@@ -1,0 +1,19 @@
+package caltrain;
+
+import javafx.scene.layout.Pane;
+
+public class TrackView {
+	public Pane layout;
+	
+	public TrackView(){
+		
+	}
+	
+	public void addTrain(){
+		TrainAnimation t = new TrainAnimation(scene);
+		layout.getChildren().add(t.getTrain());
+		t.run();
+		t.play();
+		anim.add(t);
+	}
+}

@@ -1,0 +1,11 @@
+package caltrain;
+
+import javafx.scene.layout.Pane;
+
+public class TrackView {
+	public Pane layout;
+	
+	public TrackView(){
+		
+	}
+}

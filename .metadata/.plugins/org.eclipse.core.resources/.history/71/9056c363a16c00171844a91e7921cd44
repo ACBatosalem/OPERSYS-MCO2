@@ -1,0 +1,52 @@
+package caltrain;
+
+import java.util.ArrayList;
+
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+
+public class TrackView {
+	public Pane layout;
+	public Scene scene;
+	public ArrayList<TrainAnimation> anim = new ArrayList<TrainAnimation>();
+	public ImageView station;
+	
+	public TrackView(){
+		layout = new Pane();
+		scene = new Scene(layout, 500, 500);
+		
+		createStation();
+		
+		scene.setOnKeyPressed(e -> {
+			switch(e.getCode()){
+			case ENTER: addTrain(); break;
+			case P: anim.get(0).pause(); break;
+			case O: anim.get(0).play(); break;
+			}
+		});
+	}
+	
+	public void createStation(){
+		station = new ImageView();
+		station.setImage(new Image("sprites/horizontalstation.png"));
+		
+		station.setX(0);
+		station.setY(100);
+		
+		layout.getChildren().add(station);
+		
+	}
+	
+	public void addTrain(){
+		TrainAnimation t = new TrainAnimation(scene);
+		layout.getChildren().add(t.getTrain());
+		t.run();
+		t.play();
+		anim.add(t);
+		
+		layout.getChildren().remove(station);
+		layout.getChildren().add(station);
+	}
+}

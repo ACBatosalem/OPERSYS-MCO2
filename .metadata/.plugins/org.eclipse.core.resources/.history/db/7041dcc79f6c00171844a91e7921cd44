@@ -1,0 +1,22 @@
+package caltrain;
+
+import java.util.ArrayList;
+
+import javafx.scene.layout.Pane;
+
+public class TrackView {
+	public Pane layout;
+	private ArrayList<TrainAnimation> anim = new ArrayList<TrainAnimation>();
+	
+	public TrackView(){
+		
+	}
+	
+	public void addTrain(){
+		TrainAnimation t = new TrainAnimation(scene);
+		layout.getChildren().add(t.getTrain());
+		t.run();
+		t.play();
+		anim.add(t);
+	}
+}
