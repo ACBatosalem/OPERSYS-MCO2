@@ -34,8 +34,6 @@ public class Main extends Application{
 		
 		window.setScene(scene);
 		window.show();
-		
-		a();
 	}
 	
 	private void addTrain(){

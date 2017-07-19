@@ -31,6 +31,7 @@ public class TrainAnimation implements Runnable{
 		train.setRotate(90);
 		
 		this.scene = scene;
+		
 	}
 	
 	public ImageView getTrain(){

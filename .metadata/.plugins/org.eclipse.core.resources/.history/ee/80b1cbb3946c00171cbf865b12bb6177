@@ -21,8 +21,6 @@ public class TrainAnimation implements Runnable{
 	private ImageView train = new ImageView();
 	private AnimationTimer timer;
 	
-	private Scene scene;
-	
 	public TrainAnimation(Scene scene){
 
 		train.setImage(new Image("sprites/pellettrain.png"));
@@ -30,7 +28,6 @@ public class TrainAnimation implements Runnable{
 		train.setTranslateY(0);
 		train.setRotate(90);
 		
-		this.scene = scene;
 	}
 	
 	public ImageView getTrain(){
