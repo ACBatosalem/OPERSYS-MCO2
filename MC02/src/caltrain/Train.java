@@ -90,7 +90,7 @@ public class Train implements Runnable {
 				System.out.println("Train " + trainNum + " is going next to Station "
 								   + boardStation.getStationNum());
 			}
-			try{Thread.sleep(500);} catch(Exception e) {}
+//			try{Thread.sleep(500);} catch(Exception e) {}
 		}
 	}
 

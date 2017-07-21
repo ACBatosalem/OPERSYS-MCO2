@@ -1,0 +1,43 @@
+package caltrain;
+
+import java.util.ArrayList;
+
+import javafx.stage.Stage;
+
+public class TrackController {
+	
+	public ArrayList<Station> allStations = new ArrayList<Station>();
+	public CalTrain model;
+	public TrackView view;
+	public Stage window;
+	
+	public TrackController(CalTrain model, TrackView view, Stage window){
+		
+		this.model = model;
+		this.view = view;
+		this.window = window;
+		
+		view.scene.setOnKeyPressed(e -> {
+			switch(e.getCode()){
+			case ENTER: this.view.addTrain(); break;
+			case P: 
+				if(this.view.anim.get(0).stop){
+					this.view.anim.get(0).pause(); 
+					this.view.anim.get(0).stop = false; 
+				}
+				else{
+					this.view.anim.get(0).play(); 
+					this.view.anim.get(0).stop = false;
+				}
+				break;
+			}
+		});
+		
+		window.setScene(this.view.scene);
+		window.show();
+	}
+	
+	public void createPassenger(){
+		Passenger p = new Passenger(allStations.get(0), model, 0, allStations.get(1));
+	}
+}

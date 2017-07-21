@@ -13,4 +13,7 @@
 <fullyQualifiedTypeName name="javafx.scene.layout.Pane"/>
 <fullyQualifiedTypeName name="javafx.scene.image.ImageView"/>
 <fullyQualifiedTypeName name="javafx.scene.image.Image"/>
+<fullyQualifiedTypeName name="javafx.stage.Stage"/>
+<fullyQualifiedTypeName name="caltrain.TrackController"/>
+<fullyQualifiedTypeName name="javafx.concurrent.Task"/>
 </qualifiedTypeNameHistroy>

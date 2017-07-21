@@ -15,17 +15,16 @@ public class Main extends Application{
 		
 		CalTrain ctrain = new CalTrain();
 		TrackView t = new TrackView();
+		TrackController c = new TrackController(ctrain, t, window);
 		
 		logic(ctrain, t);
 		
-		window.setScene(t.scene);
-		window.show();
 	}
 	
 	public static void logic(CalTrain ctrain, TrackView t){
 		ArrayList<Station> allStations = new ArrayList<Station>();
 		ArrayList<Train> allTrains = new ArrayList<Train>();
-
+		
 		/* Passenger-related variables */
 		int totalPassengers = 10;
 		int passengersLeft = totalPassengers;	// Passengers left to be picked up
@@ -64,9 +63,8 @@ public class Main extends Application{
 			inStationNum = (int)Math.floor(Math.random()*8);
 			tempRobot = new Passenger(allStations.get(inStationNum), ctrain, i, allStations.get(CalTrainDriver.outStat(inStationNum)));
 			threadsCompleted++;
-			try {Thread.sleep(300);} catch(Exception e){}
+//			try {Thread.sleep(300);} catch(Exception e){}
 		}
-		TrackController c = new TrackController(ctrain, t);
 		/* Actual Program */
 		System.out.println("\n---------------------\n");
 		while(totalPassServed != totalPassengers || trainsReturned) 
@@ -99,58 +97,58 @@ public class Main extends Application{
 				totalPassengers++;
 				passengersLeft++;
 				passengersServed++;
-				try {Thread.sleep(300);} catch(Exception e){}				
+//				try {Thread.sleep(300);} catch(Exception e){}				
 			}
 
-//			/* How Train Works */
-//			for(int j=0;j<allTrains.size();j++) {
-//				int tempStatNum = allTrains.get(j).getBoardStation().getStationNum();
-//				boolean tempDirection = allTrains.get(j).getDirection();
-//				int threadsToReap = -1;
-//				int threadsReaped = 0;
-//
-//				threadsToReap = Math.min(allTrains.get(j).getBoardStation().getWaitPassCount(tempDirection),
-//										 allTrains.get(j).getFreeSeats());
-//
-//				/* Passengers board train */
-//				while(threadsReaped < threadsToReap) {
-//					boolean boarded = false;
-//					if(threadsCompleted > 0) {
-//						boarded = ctrain.station_on_board(allTrains.get(j).getBoardStation(),
-//														  allTrains.get(j).getBoardStation().getWaitingPass(tempDirection).get(0),
-//														  threadsReaped + 1 == threadsToReap);
-//						if(boarded)
-//							threadsReaped++;
-//						//try{allTrains.get(j).trainThread.sleep(500);} catch(Exception e){}
-//					}
-//				}
-//
-//				passengersLeft -= threadsReaped;
-//				//passengersServed -= served;
-//				totalPassengersBoarded += threadsReaped;
-//
-//				if(threadsToReap != threadsReaped)
-//					System.out.println("Error: Too many passengers on this train!");
-//				try{allTrains.get(j).getTrainThread().sleep(500);} catch(Exception e){}
-//
-//				/* Make sure all trains return to first station */
-//				if (totalPassServed == totalPassengers && allTrains.get(j).getBoardStation().getStationNum() == 0) {
-//					allTrains.get(j).stopRun();
-//					allTrains.remove(allTrains.get(j));
-//					j--;
-//					System.out.println("STOPP");
-//					if (allTrains.size() == 0) {
-//						System.out.println("All trains are gone!");
-//						trainsReturned = false;
-//					}
-//				}
-//			}
-//		
-//			/* Notes */
-//			System.out.println("Passengers left: " + passengersLeft);
-//			System.out.println("Passengers boarded: " + totalPassengersBoarded);
-//			System.out.println("Passengers served: " + totalPassServed);
-//			System.out.println("\n-------------------------------\n");
+			/* How Train Works */
+			for(int j=0;j<allTrains.size();j++) {
+				int tempStatNum = allTrains.get(j).getBoardStation().getStationNum();
+				boolean tempDirection = allTrains.get(j).getDirection();
+				int threadsToReap = -1;
+				int threadsReaped = 0;
+
+				threadsToReap = Math.min(allTrains.get(j).getBoardStation().getWaitPassCount(tempDirection),
+										 allTrains.get(j).getFreeSeats());
+
+				/* Passengers board train */
+				while(threadsReaped < threadsToReap) {
+					boolean boarded = false;
+					if(threadsCompleted > 0) {
+						boarded = ctrain.station_on_board(allTrains.get(j).getBoardStation(),
+														  allTrains.get(j).getBoardStation().getWaitingPass(tempDirection).get(0),
+														  threadsReaped + 1 == threadsToReap);
+						if(boarded)
+							threadsReaped++;
+						//try{allTrains.get(j).trainThread.sleep(500);} catch(Exception e){}
+					}
+				}
+
+				passengersLeft -= threadsReaped;
+				//passengersServed -= served;
+				totalPassengersBoarded += threadsReaped;
+
+				if(threadsToReap != threadsReaped)
+					System.out.println("Error: Too many passengers on this train!");
+				try{allTrains.get(j).getTrainThread().sleep(500);} catch(Exception e){}
+
+				/* Make sure all trains return to first station */
+				if (totalPassServed == totalPassengers && allTrains.get(j).getBoardStation().getStationNum() == 0) {
+					allTrains.get(j).stopRun();
+					allTrains.remove(allTrains.get(j));
+					j--;
+					System.out.println("STOPP");
+					if (allTrains.size() == 0) {
+						System.out.println("All trains are gone!");
+						trainsReturned = false;
+					}
+				}
+			}
+		
+			/* Notes */
+			System.out.println("Passengers left: " + passengersLeft);
+			System.out.println("Passengers boarded: " + totalPassengersBoarded);
+			System.out.println("Passengers served: " + totalPassServed);
+			System.out.println("\n-------------------------------\n");
 		}
 
 		if(totalPassengersBoarded == totalPassengers) {

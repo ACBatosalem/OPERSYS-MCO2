@@ -93,7 +93,7 @@ public class CalTrainDriver {
 				totalPassengers++;
 				passengersLeft++;
 				passengersServed++;
-				try {Thread.sleep(300);} catch(Exception e){}				
+//				try {Thread.sleep(300);} catch(Exception e){}				
 			}
 
 			/* How Train Works */
