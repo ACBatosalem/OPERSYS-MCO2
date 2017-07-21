@@ -1,8 +1,0 @@
-package caltrain;
-
-public class TrackController {
-	public TrackController(CalTrain model, TrackView view){
-		CalTrain ctrain = new CalTrain();
-		ctrain.station_init(0);
-	}
-}

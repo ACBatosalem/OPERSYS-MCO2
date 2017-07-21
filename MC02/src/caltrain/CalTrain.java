@@ -86,6 +86,7 @@ public class CalTrain {
 			System.out.println("Passenger " + pass.getPassNum() + 
 							   " boards Train " + station.getTrain(pass.getDirection()).getTrainNum());
 		}
+		
 		station.getLock().unlock();
 	}
 
@@ -114,7 +115,7 @@ public class CalTrain {
 			boarded = true;
 		}
 
-		try { Thread.sleep(1000); } catch(Exception e) {}
+//		try { Thread.sleep(1000); } catch(Exception e) {}
 		return boarded;
 	}
 
@@ -135,7 +136,7 @@ public class CalTrain {
 				}
 			}
 			//station.getLock().unlock();
-			try { Thread.sleep(500); } catch(Exception e) {}
+//			try { Thread.sleep(500); } catch(Exception e) {}
 		}
 		return exiters;
 	}

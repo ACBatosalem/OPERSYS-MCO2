@@ -1,0 +1,31 @@
+package caltrain;
+
+import java.util.ArrayList;
+
+public class TrackController {
+	
+	public ArrayList<Station> allStations = new ArrayList<Station>();
+	public CalTrain model;
+	public TrackView view;
+	
+	public TrackController(CalTrain model, TrackView view){
+		
+		this.model = model;
+		this.view = view;
+		
+		view.scene.setOnKeyPressed(e -> {
+			switch(e.getCode()){
+			case ENTER: this.view.addTrain(); break;
+			case P: 
+				this.view.anim.get(0).pause(); 
+				this.view.anim.get(0).stop = true; 
+				break;
+			case O: this.view.anim.get(0).play(); break;
+			}
+		});
+	}
+	
+	public void createPassenger(){
+		Passenger p = new Passenger(allStations.get(0), model, 0, allStations.get(1));
+	}
+}
