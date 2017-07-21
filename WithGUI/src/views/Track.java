@@ -29,7 +29,6 @@ public class Track {
 	}
 	
 	public void createTrain(Game g){
-		
 		Train t = new Train(trains.size() + 1, g);
 		
 		anims.add(t.timer);

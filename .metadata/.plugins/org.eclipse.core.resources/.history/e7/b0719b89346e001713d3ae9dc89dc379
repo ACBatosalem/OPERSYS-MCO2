@@ -1,0 +1,8 @@
+package controllers;
+
+public class TrainController {
+	public views.Train view;
+	public TrainController(){
+		
+	}
+}

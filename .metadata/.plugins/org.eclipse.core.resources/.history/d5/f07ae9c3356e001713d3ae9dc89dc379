@@ -1,0 +1,34 @@
+package controllers;
+
+import java.util.ArrayList;
+
+import javafx.application.Application;
+import javafx.stage.Stage;
+import models.CalTrain;
+import models.Station;
+import models.Train;
+import views.Game;
+
+public class Main extends Application{
+	
+	@Override
+	public void start(Stage window) throws Exception {
+		CalTrain ctrain = new CalTrain();
+		ArrayList<Station> allStations = new ArrayList<Station>();
+		ArrayList<Train> allTrains = new ArrayList<Train>();
+		
+		int freeSeats = 5;
+		int totalNumSeats += freeSeats;
+		
+		Game g = new Game();
+		
+		window.setScene(g.scene);
+		window.show();
+		
+	}
+	
+	public static void main(String[] args) {
+		launch(args);
+	}
+
+}

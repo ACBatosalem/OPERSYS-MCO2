@@ -1,0 +1,26 @@
+package controllers;
+
+import javafx.application.Application;
+import javafx.stage.Stage;
+import views.Game;
+
+public class Main extends Application{
+	
+	@Override
+	public void start(Stage window) throws Exception {
+		
+		int freeSeats = 5;
+		int totalNumSeats += freeSeats;
+		
+		Game g = new Game();
+		
+		window.setScene(g.scene);
+		window.show();
+		
+	}
+	
+	public static void main(String[] args) {
+		launch(args);
+	}
+
+}

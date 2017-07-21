@@ -89,11 +89,15 @@ public class Train implements Runnable {
 				boardStation = boardStation.getNextStation(direction);
 				System.out.println("Train " + trainNum + " is going next to Station "
 								   + boardStation.getStationNum());
+				next = true;
+				try{while(next)Thread.sleep(500);} catch(Exception e) {}
 			}
 			try{Thread.sleep(500);} catch(Exception e) {}
 		}
 	}
 
+	public boolean next = false;
+	
 	private CalTrain sync;
 	private Station boardStation;
 	private int freeSeats, trainNum;

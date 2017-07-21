@@ -9,13 +9,16 @@ public class Station {
 	public final static String waiting = "Waiting: ";
 	public Pane layout;
 	public int stationNum;
+	public int passLeft;
+	public int passRight;
 	public Label text;
 	public Label text2;
 	
 	public Station(int num, int pass){
+		passLeft = pass;
 		layout = new Pane();
 		text = new Label("" + (num + 1));
-		text2 = new Label(waiting + pass);
+		text2 = new Label(waiting + passLeft);
 		
 		stationNum = num;
 		
@@ -39,6 +42,11 @@ public class Station {
 		layout.setMinSize(300, 200);
 		layout.setMaxSize(300, 200);
 		
+		layout.getChildren().addAll(text, text2);
+	}
+	
+	public void resetLayout(){
+		layout.getChildren().removeAll(text, text2);
 		layout.getChildren().addAll(text, text2);
 	}
 	
