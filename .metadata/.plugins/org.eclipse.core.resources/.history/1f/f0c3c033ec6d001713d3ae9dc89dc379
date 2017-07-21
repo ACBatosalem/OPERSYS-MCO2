@@ -1,0 +1,13 @@
+package views;
+
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+
+public class Game {
+	public BorderPane layout;
+	public Scene scene;
+	
+	public Game(){
+		
+	}
+}

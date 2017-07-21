@@ -1,0 +1,8 @@
+package views;
+
+import javafx.scene.layout.Pane;
+
+public class Station {
+	public Pane layout;
+	
+}

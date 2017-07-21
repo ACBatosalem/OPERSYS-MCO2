@@ -1,0 +1,22 @@
+package views;
+
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+
+public class Game {
+	public BorderPane layout;
+	public Scene scene;
+	
+	public Game(){
+		layout = new BorderPane();
+		
+		scene = new Scene(layout, 500, 500)
+	}
+	
+	public void setUpLayout(){
+		Track t = new Track();
+		layout.setCenter(t.layout);
+		
+		
+	}
+}

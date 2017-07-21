@@ -1,0 +1,16 @@
+package views;
+
+import javafx.scene.layout.Pane;
+
+public class Station {
+	public Pane layout;
+	
+	public Station(){
+		layout = new Pane();
+	}
+	
+	public void setUpLayout(){
+		layout.setStyle("-fx-background-image: url('')");
+	}
+	
+}

@@ -1,0 +1,6 @@
+package views;
+
+public class Station {
+	public Pane layout;
+	
+}

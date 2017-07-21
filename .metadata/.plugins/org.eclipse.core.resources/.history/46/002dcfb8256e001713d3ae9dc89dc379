@@ -1,0 +1,30 @@
+package views;
+
+import java.awt.Color;
+
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
+
+public class TrainPreview {
+	
+	public Pane layout;
+	public Label[] labels;
+	
+	public TrainPreview(int trainNum, int passNum, int nextStation){
+		layout = new Pane();
+		
+		labels = new Label[] {new Label("Train " + trainNum), new Label("Passengers: " + passNum), new Label("Next Station " + trainNum)};
+		
+		labels[0].setFont(new Font("Consolas", 14));
+		labels[1].setFont(new Font("Consolas", 14));
+		labels[2].setFont(new Font("Consolas", 14));
+		
+		for(int i = 0; i < labels.length; i++){
+			labels[i].setFont(new Font("Consolas", 14));
+			labels[i].setTextFill(Color.WHITE);
+		}
+			
+	}
+
+}

@@ -1,0 +1,12 @@
+package views;
+
+import javafx.scene.layout.VBox;
+
+public class InfoPanel {
+	public VBox layout;
+
+	public InfoPanel(){
+		layout = new VBox(0);
+	}
+	
+}

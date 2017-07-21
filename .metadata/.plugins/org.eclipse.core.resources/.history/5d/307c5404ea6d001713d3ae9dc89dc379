@@ -1,0 +1,10 @@
+package views;
+
+import java.util.ArrayList;
+
+import caltrain.TrainAnimation;
+
+public class Track {
+	public Pane layout;
+	public ArrayList<TrainAnimation> anim = new ArrayList<TrainAnimation>();
+}

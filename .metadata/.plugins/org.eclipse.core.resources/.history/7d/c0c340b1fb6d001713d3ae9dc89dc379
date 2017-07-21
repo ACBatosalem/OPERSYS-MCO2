@@ -1,0 +1,5 @@
+package views;
+
+public class Station {
+	public final static String imageLoc = "sprites/station.png";
+}

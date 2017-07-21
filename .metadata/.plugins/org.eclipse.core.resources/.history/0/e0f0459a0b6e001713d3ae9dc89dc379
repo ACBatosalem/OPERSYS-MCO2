@@ -1,0 +1,37 @@
+package views;
+
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+
+public class Station {
+	public Pane layout;
+	public int stationNum;
+	public Label text;
+	
+	public Station(int num){
+		layout = new Pane();
+		text = new Label("" + (num + 1));
+		
+		stationNum = num;
+		
+		text.setLayoutX(220);
+		text.setLayoutY(33);
+		
+		Font f = new Font("Arial", 16);
+		text.setFont(f);
+		text.setTextFill(Color.WHITE);
+		
+		setUpLayout();
+	}
+	
+	public void setUpLayout(){
+		layout.setStyle("-fx-background-image: url('sprites/stationprev.png')");
+		layout.setMinSize(300, 200);
+		layout.setMaxSize(300, 200);
+		
+		layout.getChildren().add(text);
+	}
+	
+}

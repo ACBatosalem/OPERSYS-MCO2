@@ -1,0 +1,25 @@
+package views;
+
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
+
+public class Station {
+	public Pane layout;
+	public int stationNum;
+	public Label text;
+	
+	public Station(int num){
+		layout = new Pane();
+		text = new Label(num);
+		
+		stationNum = num;
+		
+		setUpLayout();
+	}
+	
+	public void setUpLayout(){
+		layout.setStyle("-fx-background-image: url('sprites/stationprev.png')");
+		layout.setMinSize(300, 200);
+	}
+	
+}

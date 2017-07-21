@@ -1,0 +1,9 @@
+package views;
+
+public class TrainPreview {
+	
+	public Pane layout;
+	public Label[] labels;
+	public String[] text;
+
+}

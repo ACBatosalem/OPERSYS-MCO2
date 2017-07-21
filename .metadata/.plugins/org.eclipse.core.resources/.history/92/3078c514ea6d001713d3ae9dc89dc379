@@ -1,0 +1,10 @@
+package views;
+
+import java.util.ArrayList;
+
+import javafx.scene.layout.Pane;
+
+public class Track {
+	public Pane layout;
+	
+}

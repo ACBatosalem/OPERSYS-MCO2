@@ -1,0 +1,5 @@
+package views;
+
+public class Train {
+	public ImageView sprite = new ImageView();
+}

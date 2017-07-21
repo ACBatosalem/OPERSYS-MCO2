@@ -1,0 +1,25 @@
+package views;
+
+import javafx.scene.layout.VBox;
+
+public class InfoPanel {
+	public VBox layout;
+	public Station s;
+
+	public InfoPanel(){
+		layout = new VBox(0);
+		
+		createStation(0, 10);
+		
+	}
+	
+	public void createStation(int index, int num){
+		s = new Station(index, num);
+		layout.getChildren().add(s.layout);
+	}
+	
+	public void resetLayout(){
+		layout.getChildren().remove(s.layout);
+	}
+	
+}

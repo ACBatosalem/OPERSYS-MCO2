@@ -1,0 +1,39 @@
+package views;
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+public class Train {
+	public static String spriteLoc = "sprites/pellettrain.png";
+	public ImageView sprite;
+	public double xValue;
+	public double yValue;
+	public int trainNum;
+	
+	public Train(int num){
+		trainNum = num;
+		
+		sprite = new ImageView();
+		
+		sprite.setImage(new Image(spriteLoc));
+		
+		xValue = 50 - sprite.getLayoutBounds().getMinX();
+		yValue = 50 - sprite.getLayoutBounds().getMinY();
+		
+		sprite.setRotate(90);
+		
+		sprite.setLayoutX(xValue);
+		sprite.setLayoutY(yValue);
+	}
+	
+	public void updateCoordinates(double x, double y){
+		xValue = x;
+		yValue = y;
+	}
+	
+	public void onClick(){
+		sprite.setOnMouseClicked(e -> {
+			System.out.println();
+		});
+	}
+}

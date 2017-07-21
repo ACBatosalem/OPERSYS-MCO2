@@ -1,0 +1,30 @@
+package views;
+
+import java.util.ArrayList;
+
+import javafx.animation.AnimationTimer;
+import javafx.scene.layout.Pane;
+
+public class Track {
+	public Pane layout;
+	public ArrayList<Train> trains;
+	public ArrayList<AnimationTimer> anims;
+	
+	public Track(){
+		layout = new Pane();
+		trains = new ArrayList<>();
+		anims = new ArrayList<>();
+	}
+	
+	public boolean createTrain(){
+		Train t = new Train();
+		return trains.add(t);
+	}
+	
+	public boolean createPath(){
+		AnimationTimer timer = new AnimationTimer(){
+			
+		}
+	}
+	
+}

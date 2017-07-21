@@ -1,0 +1,5 @@
+package views;
+
+public class Game {
+	public BorderPane layout;
+}

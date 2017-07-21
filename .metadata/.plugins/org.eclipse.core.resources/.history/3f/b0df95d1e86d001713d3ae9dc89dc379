@@ -1,0 +1,8 @@
+package views;
+
+import javafx.scene.image.ImageView;
+
+public class Train {
+	public ImageView sprite = new ImageView();
+	
+}

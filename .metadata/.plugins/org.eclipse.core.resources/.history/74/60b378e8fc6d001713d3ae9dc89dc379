@@ -1,0 +1,68 @@
+package views;
+
+import java.util.ArrayList;
+
+import javafx.animation.AnimationTimer;
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+
+public class Track {
+	public Pane layout;
+	public ArrayList<ImageView> trains;
+	public ArrayList<AnimationTimer> anims;
+	public Button[] stations;
+	
+	public Track(){
+		layout = new Pane();
+		trains = new ArrayList<>();
+		anims = new ArrayList<>();
+		
+		stations = new Button[8];
+		
+		setUpLayout();
+		createTrain();
+	}
+	
+	public boolean createTrain(){
+		
+		Train t = new Train(trains.size() + 1);
+		
+		anims.add(t.timer);
+		
+		System.out.println(t.trainNum + " " + t.xValue + " " + t.yValue);
+		
+		layout.getChildren().add(t.sprite);
+		
+		return trains.add(t.sprite);
+	}
+	
+	public void setUpStations(){
+		for(int i = 0; i < stations.length; i++){
+			stations[i] = new Button();
+			stations[i].setPrefSize(60, 64);
+			stations[i].setId("station");
+		}
+	}
+	
+	public void setUpLayout(){
+		layout.setPadding(new Insets(0));
+		layout.setStyle("-fx-background-image: url('sprites/track.png')");
+		layout.getChildren().addAll(trains);
+	}
+	
+	public void resetLayout(){
+		layout.getChildren().removeAll(trains);
+		layout.getChildren().addAll(trains);
+	}
+	
+	public ImageView getTrain(int index){
+		return trains.get(index);
+	}
+	
+	public AnimationTimer getAnim(int index){
+		return anims.get(index);
+	}
+	
+}

@@ -1,0 +1,56 @@
+package views;
+
+import java.util.ArrayList;
+
+import javafx.animation.AnimationTimer;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+
+public class Track {
+	public Pane layout;
+	public ArrayList<ImageView> trains;
+	public ArrayList<AnimationTimer> anims;
+	
+	
+	
+	public Track(){
+		layout = new Pane();
+		trains = new ArrayList<>();
+		anims = new ArrayList<>();
+		
+		createTrain();
+		setUpLayout();
+	}
+	
+	public boolean createTrain(){
+		Train t = new Train(trains.size() + 1);
+		createPath(t.sprite);
+		resetLayout();
+		
+		return trains.add(t.sprite);
+	}
+	
+	public boolean createPath(ImageView train){
+		
+		
+		return anims.add(timer);
+	}
+	
+	public void setUpLayout(){
+		layout.getChildren().addAll(trains);
+	}
+	
+	public void resetLayout(){
+		layout.getChildren().removeAll(trains);
+		layout.getChildren().addAll(trains);
+	}
+	
+	public void play(int i){
+		anims.get(i).start();
+	}
+	
+	public void pause(int i){
+		anims.get(i).stop();
+	}
+	
+}

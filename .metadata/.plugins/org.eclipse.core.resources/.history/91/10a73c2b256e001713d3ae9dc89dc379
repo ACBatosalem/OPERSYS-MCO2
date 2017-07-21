@@ -1,0 +1,18 @@
+package views;
+
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
+
+public class TrainPreview {
+	
+	public Pane layout;
+	public Label[] labels;
+	public String[] text;
+	
+	public TrainPreview(int trainNum, int passNum, int nextStation){
+		layout = new Pane();
+		
+		labels = new Label[] {"Train " + trainNum, " "};
+	}
+
+}

@@ -1,0 +1,4 @@
+#station{
+	-fx-background-image: url('sprite/station.png');
+	
+}
