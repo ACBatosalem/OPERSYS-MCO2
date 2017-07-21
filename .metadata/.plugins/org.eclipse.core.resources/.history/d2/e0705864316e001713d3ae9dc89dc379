@@ -48,6 +48,7 @@ public class Train {
 	
 	public void handleEvents(Game g){
 		sprite.setOnMouseClicked(e -> {
+			System.out.println("You clicked on Train " + trainNum);
 			g.p.train(trainNum, 10, 2);
 		});
 	}

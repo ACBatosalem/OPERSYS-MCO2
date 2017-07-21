@@ -13,6 +13,7 @@ public class InfoPanel {
 		
 		createStation(0, 10);
 		train(1, 0, 0);
+//		resetLayout();
 	}
 	
 	public void createStation(int index, int num){
