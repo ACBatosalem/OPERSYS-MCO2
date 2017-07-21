@@ -51,14 +51,14 @@ public class Main extends Application{
 		}
 		System.out.println();	// Separate Station Initialization Printing
 		
-//		/* Initialize Passengers */
-//		for(int i=0;i<totalPassengers;i++) 
-//		{
-//			inStationNum = (int)Math.floor(Math.random()*8);
-//			tempRobot = new Passenger(allStations.get(inStationNum), ctrain, i, allStations.get(CalTrainDriver.outStat(inStationNum)));
-//			threadsCompleted++;
-//			try {Thread.sleep(300);} catch(Exception e){}
-//		}
+		/* Initialize Passengers */
+		for(int i=0;i<totalPassengers;i++) 
+		{
+			inStationNum = (int)Math.floor(Math.random()*8);
+			tempRobot = new Passenger(allStations.get(inStationNum), ctrain, i, allStations.get(CalTrainDriver.outStat(inStationNum)));
+			threadsCompleted++;
+			try {Thread.sleep(300);} catch(Exception e){}
+		}
 		
 		Game g = new Game();
 		
