@@ -13,6 +13,9 @@ public class CalTrainDriver {
 	}
 
 	public static void main(String[] args) {
+		/* Record Time */
+		long startTime = System.currentTimeMillis();
+
 		/* System-related variables */
 		CalTrain ctrain = new CalTrain();
 		ArrayList<Station> allStations = new ArrayList<Station>();
@@ -56,7 +59,7 @@ public class CalTrainDriver {
 			inStationNum = (int)Math.floor(Math.random()*8);
 			tempRobot = new Passenger(allStations.get(inStationNum), ctrain, i, allStations.get(CalTrainDriver.outStat(inStationNum)));
 			threadsCompleted++;
-			try {Thread.sleep(300);} catch(Exception e){}
+			try {Thread.sleep(500);} catch(Exception e){}
 		}
 
 		/* Actual Program */
@@ -81,7 +84,7 @@ public class CalTrainDriver {
 			}
 
 			/* Random generation of passengers */
-			if (insertPass() && maxInsert < 5) {
+			/*if (insertPass() && maxInsert < 5) {
 				inStationNum = (int)Math.floor(Math.random()*8);
 				tempRobot = new Passenger(allStations.get(inStationNum), ctrain, passCtr, 
 										  allStations.get(CalTrainDriver.outStat(inStationNum)));
@@ -92,7 +95,7 @@ public class CalTrainDriver {
 				passengersLeft++;
 				passengersServed++;
 				try {Thread.sleep(300);} catch(Exception e){}				
-			}
+			}*/
 
 			/* How Train Works */
 			for(int j=0;j<allTrains.size();j++) {
@@ -123,14 +126,14 @@ public class CalTrainDriver {
 
 				if(threadsToReap != threadsReaped)
 					System.out.println("Error: Too many passengers on this train!");
-				try{allTrains.get(j).getTrainThread().sleep(500);} catch(Exception e){}
+				try{allTrains.get(j).getTrainThread().sleep(800);} catch(Exception e){}
 
 				/* Make sure all trains return to first station */
 				if (totalPassServed == totalPassengers && allTrains.get(j).getBoardStation().getStationNum() == 0) {
 					allTrains.get(j).stopRun();
+					System.out.println("Train " + allTrains.get(j).getTrainNum() + " is decommissioned.");
 					allTrains.remove(allTrains.get(j));
 					j--;
-					System.out.println("STOPP");
 					if (allTrains.size() == 0) {
 						System.out.println("All trains are gone!");
 						trainsReturned = false;
@@ -147,6 +150,8 @@ public class CalTrainDriver {
 
 		if(totalPassengersBoarded == totalPassengers) {
 			System.out.println("All Passengers served!");
+			long duration = (System.currentTimeMillis() - startTime) / 1000;
+			System.out.println("\nExecution Time: " + duration + " seconds\n");
 			System.exit(0);
 		}
 	}

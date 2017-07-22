@@ -10,6 +10,7 @@ public class Train implements Runnable {
 		direction = true;
 		continueRun = true;
 		riders = new ArrayList<Passenger>();
+		boardStation.addTrainQueue(this, direction);
 		trainThread.start();
 	}
 
@@ -68,7 +69,8 @@ public class Train implements Runnable {
 	@Override
 	public void run() {
 		while(getContinueRun()) {
-			if (boardStation.getTrain(direction) == null) 
+			if (boardStation.getTrain(direction) == null &&
+				boardStation.checkNextQueue(this, direction)) 
 			{
 				/* Train arrives at station */
 				boardStation.getLock().lock();
@@ -84,11 +86,13 @@ public class Train implements Runnable {
 				boardStation.getLock().unlock();
 
 				/* Train plans next destination */
+				boardStation.removeFromQueue(direction);
 				boardStation = boardStation.getNextStation(direction);
+				boardStation.addTrainQueue(this, direction);
 				System.out.println("Train " + trainNum + " is going next to Station "
 								   + boardStation.getStationNum());
 			}
-			try{Thread.sleep(500);} catch(Exception e) {}
+			try{Thread.sleep(800);} catch(Exception e) {}
 		}
 	}
 

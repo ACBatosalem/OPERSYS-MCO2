@@ -21,13 +21,17 @@ public class CalTrain {
 			if (station.getStationNum() == 7 && station.getTrain(true) != null) 				// When reaching end stations,
 			{												// Train drops off from one side
 				station.setRightTrain(null);				// and receives in the other
+				station.removeFromQueue(curr.getDirection());
 				station.setLeftTrain(curr);
+				station.addTrainQueue(curr, !curr.getDirection());
 				curr.setDirection(!curr.getDirection());
 			}
 			else if (station.getStationNum() == 0 && station.getTrain(false) != null)
 			{
 				station.setLeftTrain(null);
+				station.removeFromQueue(curr.getDirection());
 				station.setRightTrain(curr);
+				station.addTrainQueue(curr, !curr.getDirection());
 				curr.setDirection(!curr.getDirection());
 			}
 			station.setEmptySeats(curr.getDirection(), curr.getFreeSeats());

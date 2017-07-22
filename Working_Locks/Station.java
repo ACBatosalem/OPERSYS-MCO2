@@ -19,6 +19,8 @@ public class Station {
 		rightStation = null;
 		leftWaitingPass = new ArrayList<Passenger>();
 		rightWaitingPass = new ArrayList<Passenger>();
+		leftQueue = new ArrayList<Train>();
+		rightQueue = new ArrayList<Train>();
 	}
 
 	/* Getters */
@@ -82,6 +84,12 @@ public class Station {
 		if (direction)
 			return rightWaitingPass.size();
 		return leftWaitingPass.size();
+	}
+
+	public ArrayList<Train> getQueue(boolean direction) {
+		if (direction)
+			return rightQueue;
+		return leftQueue;
 	}
 
 	/* Setters */
@@ -183,6 +191,26 @@ public class Station {
 		return "Station " + stationNum + ": Left Station = " + left + " Right Station = " + right;
 	}
 
+	public boolean checkTrainInQueue(Train train, boolean direction) {
+		if (getQueue(direction).contains(train))
+			return true;
+		return false;
+	}
+
+	public boolean checkNextQueue(Train train, boolean direction) {
+		if(getQueue(direction).get(0).getTrainNum() == train.getTrainNum())
+			return true;
+		return false;
+	}
+
+	public void addTrainQueue(Train train, boolean direction) {
+		getQueue(direction).add(train);
+	}
+
+	public void removeFromQueue(boolean direction) {
+		getQueue(direction).remove(0);
+	}
+
 	/* Synchronization Functions */
 	public void waitPassSeated() {
 		try {
@@ -221,4 +249,5 @@ public class Station {
 	private int leftTrainPass, rightTrainPass;
 	private Station leftStation, rightStation;
 	private Train leftTrain, rightTrain;
+	private ArrayList<Train> leftQueue, rightQueue;
 }
