@@ -48,7 +48,7 @@ public class Train {
 	
 	public void handleEvents(Game g){
 		sprite.setOnMouseClicked(e -> {
-			g.p.train(trainNum, 10, 2);
+			g.p.train(trainNum, g.passLeft, 2);
 		});
 	}
 	

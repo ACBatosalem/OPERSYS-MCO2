@@ -1,0 +1,82 @@
+package controllers;
+
+import java.util.ArrayList;
+
+import javafx.scene.control.Button;
+import models.CalTrain;
+import models.CalTrainDriver;
+import models.Passenger;
+import models.Station;
+import models.Train;
+import views.Game;
+
+public class Controller {
+	public Game g;
+	public CalTrain c;
+	
+	public ArrayList<Station> allStations = new ArrayList<Station>();
+	public ArrayList<Train> allTrains = new ArrayList<Train>();
+	
+	public int totalPassengers = 10;
+	public int passengersLeft = totalPassengers;	// Passengers left to be picked up
+	public boolean trainsReturned = true;			// If trains haven't returned to Station 0
+	public int inStationNum, freeSeats;
+	public Train tempTrain;
+	
+	/* Program running-related variables */
+	int totalPassengersBoarded = 0;
+	int totalNumSeats = 0;
+	int threadsCompleted = 0;
+	int trainCtr = 0;
+	int passCtr = 10;
+	int maxInsert = 0;
+	
+	public Controller(){
+		this.g = new Game();
+		this.c = new CalTrain();
+		
+		createStations();
+		createPassengers();
+	}
+	
+	public void createStations(){
+		g.passLeft = 0;
+		System.out.println("Initializing stations");
+		for(int i=0;i<8;i++) {
+			allStations.add(c.station_init(i));
+			g.p.createStation(i, 0);
+			if (i >= 1 && i < 8) {
+				allStations.get(i-1).setRightStation(allStations.get(i));
+				allStations.get(i).setLeftStation(allStations.get(i-1));
+			}
+			System.out.println(allStations.get(i).displayNextStations());
+		}
+	}
+	
+	public void createPassengers(){
+		/* Initialize Passengers */
+		for(int i=0;i<totalPassengers;i++) 
+		{
+			inStationNum = (int)Math.floor(Math.random()*8);
+			Passenger tempRobot = new Passenger(allStations.get(inStationNum), c, i, allStations.get(CalTrainDriver.outStat(inStationNum)));
+			threadsCompleted++;
+			try {Thread.sleep(300);} catch(Exception e){}
+		}
+		
+		for(int i = 0; i < allStations.size(); i++){
+			int pass = allStations.get(i).getWaitPassCount(true);
+			g.p.createStation(i, pass);
+			System.out.println("Station: " + i + " Passengers: " + pass);
+		}
+	}
+	
+	public void a(){
+		for(int i = 0; i < g.t.stations.length; i++){
+			int j = i;
+			g.t.stations[i].setOnMouseClicked(e -> {
+				g.p.createStation(j, allStations.get(i).getWaitPassCount(false));
+				g.layout.setRight(g.p.layout);
+			});
+		}
+	}
+}

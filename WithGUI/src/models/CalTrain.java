@@ -94,23 +94,19 @@ public class CalTrain {
 		if (station.getTrain(pass.getDirection()) != null)
 		{
 			/* Passenger rides Train and updates Train stuff */
+			System.out.println("Passenger " + pass.getPassNum() + " boarded at Train");
+			System.out.println(station.getTrain(pass.getDirection()).getTrainNum());
 			station.getTrain(pass.getDirection()).addRider(pass);
 			station.getVarLock().lock();
 			station.decWaitPass(pass, pass.getDirection());
 			station.decStandPass(pass.getDirection());
 			station.decEmptySeats(pass.getDirection());
 			station.getVarLock().unlock();
-
-			System.out.println("Passenger " + pass.getPassNum() + " is on board at Train " + 
-						       station.getTrain(pass.getDirection()).getTrainNum());
 			
-			/* Passenger signals station that he/she is seated on the train */
-			if (station.getEmptySeats(pass.getDirection()) == 0 || 
-				station.getTrainPass(pass.getDirection()) == 0 || 
-				allRode)
-				station.signalPassSeated();
-
 			boarded = true;
+			/* Passenger signals station that he/she is seated on the train */
+			if (allRode)
+				station.signalPassSeated();
 		}
 
 		try { Thread.sleep(1000); } catch(Exception e) {}

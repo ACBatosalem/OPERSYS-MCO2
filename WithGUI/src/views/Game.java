@@ -9,6 +9,7 @@ public class Game {
 	public Track t;
 	public InfoPanel p;
 	public static int ctr = 0;
+	public int passLeft = 0;
 	
 	public Game(){
 		layout = new BorderPane();
@@ -32,25 +33,28 @@ public class Game {
 	public void handleEvents(){
 		scene.setOnKeyPressed(e -> {
 			switch(e.getCode()){
-			case K: t.createTrain(this); break;
+			case K: 
+				
+				if(ctr % 2 == 1){
+					t.createTrain(this); 
+					t.getAnim(t.anims.size() - 1).stop();
+				}
+				else{
+					System.out.println("Cannot create a train while paused!");
+				}
+				break;
 			default: 
+				ctr++;
 				for(int i = 0; i < t.anims.size(); i++){
-					if(ctr % 2 == 0)
+					if(ctr % 2 == 1)
 						t.getAnim(i).stop();
 					else
 						t.getAnim(i).start();
 				}
-				ctr++;
+				System.out.println(ctr);
+				
 				break;
 			}
 		});
-		
-		for(int i = 0; i < t.stations.length; i++){
-			int j = i;
-			t.stations[i].setOnMouseClicked(e -> {
-				p.createStation(j, 10);
-				layout.setRight(p.layout);
-			});
-		}
 	}
 }

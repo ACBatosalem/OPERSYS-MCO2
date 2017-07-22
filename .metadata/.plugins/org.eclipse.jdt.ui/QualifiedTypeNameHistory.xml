@@ -28,4 +28,6 @@
 <fullyQualifiedTypeName name="models.Train"/>
 <fullyQualifiedTypeName name="models.Station"/>
 <fullyQualifiedTypeName name="views.Station"/>
+<fullyQualifiedTypeName name="views.Track"/>
+<fullyQualifiedTypeName name="views.Game"/>
 </qualifiedTypeNameHistroy>

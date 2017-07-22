@@ -5,27 +5,33 @@ import javafx.scene.layout.VBox;
 
 public class InfoPanel {
 	public VBox layout;
+	public Station[] stations = new Station[8];
 	public Station s;
 	public TrainPreview p;
 
 	public InfoPanel(){
 		layout = new VBox(0);
 		
-		createStation(0, 10);
 		train(1, 0, 0);
 	}
 	
+	public void initStations(){
+		for(int i = 0; i < stations.length; i++){
+			stations[i] = new Station(i, 0);
+		}
+	}
+	
 	public void createStation(int index, int num){
-		s = new Station(index, num);
+		stations[index].make(index, num);
 		layout.getChildren().clear();
-		addLayout(s.layout);
+		addLayout(stations[index].layout);
 		if(p != null)
 			addLayout(p.layout);
 	}
 	
 	public void removeChildren(){
-		System.out.println("s " + layout.getChildren().remove(s.layout));
-		System.out.println("p " + layout.getChildren().remove(p.layout));
+		layout.getChildren().remove(s.layout);
+		layout.getChildren().remove(p.layout);
 	}
 	
 	public void addLayout(Pane n){

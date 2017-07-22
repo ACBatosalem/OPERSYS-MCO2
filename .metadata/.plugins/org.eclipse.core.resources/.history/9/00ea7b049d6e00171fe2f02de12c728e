@@ -1,0 +1,43 @@
+package controllers;
+
+import java.util.ArrayList;
+
+import javafx.scene.control.Button;
+import models.CalTrain;
+import models.Passenger;
+import models.Station;
+import models.Train;
+import views.Game;
+
+public class Controller {
+	public Game g;
+	public CalTrain c;
+	
+	public ArrayList<Station> allStations = new ArrayList<Station>();
+	public ArrayList<Train> allTrains = new ArrayList<Train>();
+	
+	public Controller(){
+		this.g = new Game();
+		this.c = new CalTrain();
+		
+		createStations();
+	}
+	
+	public void createStations(){
+		g.passLeft = 0;
+		System.out.println("Initializing stations");
+		for(int i=0;i<8;i++) {
+			allStations.add(c.station_init(i));
+			g.p.createStation(i, 0);
+			if (i >= 1 && i < 8) {
+				allStations.get(i-1).setRightStation(allStations.get(i));
+				allStations.get(i).setLeftStation(allStations.get(i-1));
+			}
+			System.out.println(allStations.get(i).displayNextStations());
+		}
+	}
+	
+	public void createPassengers(){
+		
+	}
+}
